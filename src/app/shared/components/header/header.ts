@@ -15,7 +15,15 @@ export class Header {
 
   navLinks = [
     { label: 'Home', path: '/' },
-    { label: 'Services', path: '/services' },
+    {
+      label: 'Services',
+      path: '/services',
+      children: [
+        { label: 'General Consultation', path: '/services/consultation' },
+        { label: 'Lab Test', path: '/services/lab-test' },
+        { label: 'Ambulance', path: '/services/ambulance' },
+      ],
+    },
     { label: 'Doctors', path: '/doctors' },
     { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' },
