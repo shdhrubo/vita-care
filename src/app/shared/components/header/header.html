@@ -1,33 +1,21 @@
-<header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-sm border-b border-border">
+<header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-xs border-b border-border">
   <div class="max-w-350 mx-auto px-4">
     <div class="flex items-center justify-between h-16">
       <!-- Logo -->
       <a routerLink="/" class="flex items-center gap-2">
-        <div class="p-2 rounded-lg bg-primary-400">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            class="h-6 w-6 text-primary"
-          >
-            <path
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-            />
-          </svg>
+        <div class="flex items-center justify-center p-2 rounded-lg bg-primary-400">
+          <mat-icon class="h-6 w-6" svgIcon="platform_solid:heart-logo"> </mat-icon>
         </div>
+
         <span class="text-xl font-bold text-black">VitaCare</span>
       </a>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-8">
         @for (link of navLinks; track link.path) {
-        <a [routerLink]="link.path" class="nav-link">
-          {{ link.label }}
-        </a>
+          <a [routerLink]="link.path" class="nav-link">
+            {{ link.label }}
+          </a>
         }
       </nav>
 
@@ -44,38 +32,38 @@
         [attr.aria-label]="isMenuOpen ? 'Close menu' : 'Open menu'"
       >
         @if (!isMenuOpen) {
-        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <line x1="4" x2="20" y1="12" y2="12" />
-          <line x1="4" x2="20" y1="6" y2="6" />
-          <line x1="4" x2="20" y1="18" y2="18" />
-        </svg>
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
         } @else {
-        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-          <path d="M18 6 6 18" />
-          <path d="m6 6 12 12" />
-        </svg>
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
         }
       </button>
     </div>
 
     <!-- Mobile Menu -->
     @if (isMenuOpen) {
-    <div class="md:hidden py-4">
-      <nav class="flex flex-col gap-4">
-        @for (link of navLinks; track link.path) {
-        <a [routerLink]="link.path" class="nav-link" (click)="closeMenu()">
-          {{ link.label }}
-        </a>
-        }
+      <div class="md:hidden py-4">
+        <nav class="flex flex-col gap-4">
+          @for (link of navLinks; track link.path) {
+            <a [routerLink]="link.path" class="nav-link" (click)="closeMenu()">
+              {{ link.label }}
+            </a>
+          }
 
-        <div class="flex flex-col gap-2 pt-4">
-          <a routerLink="/login" class="auth-link text-center" (click)="closeMenu()"> Sign In </a>
-          <a routerLink="/register" class="primary-btn text-center" (click)="closeMenu()">
-            Get Started
-          </a>
-        </div>
-      </nav>
-    </div>
+          <div class="flex flex-col gap-2 pt-4">
+            <a routerLink="/login" class="auth-link text-center" (click)="closeMenu()"> Sign In </a>
+            <a routerLink="/register" class="primary-btn text-center" (click)="closeMenu()">
+              Get Started
+            </a>
+          </div>
+        </nav>
+      </div>
     }
   </div>
 </header>
