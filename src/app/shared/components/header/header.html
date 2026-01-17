@@ -12,41 +12,38 @@
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex items-center gap-4">
-        @for (link of navLinks; track link.path) {
-          @if (link.children) {
-            <div class="relative group h-full flex items-center">
-              <a [routerLink]="link.path" class="nav-link">
-                {{ link.label }}
-                <mat-icon
-                  class="w-4! h-4! min-w-4! min-h-4! text-[16px]! leading-none transition-transform group-hover:rotate-180"
-                  svgIcon="platform_solid:chevron-down"
-                ></mat-icon>
-              </a>
+        @for (link of navLinks; track link.path) { @if (link.children) {
+        <div class="relative group h-full flex items-center">
+          <a [routerLink]="link.path" class="nav-link">
+            {{ link.label }}
+            <!-- Icon with rotation based on group hover -->
+            <mat-icon
+              class="w-4! h-4! min-w-4! min-h-4! text-[16px]! leading-none transition-transform duration-200 group-hover:rotate-180"
+              svgIcon="platform_solid:chevron-down"
+            ></mat-icon>
+          </a>
 
-              <!-- Dropdown Menu -->
-              <div
-                class="absolute top-full left-0 pt-2 w-56 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-500 ease-in-out z-50"
+          <!-- Dropdown Menu -->
+          <div
+            class="absolute top-full left-0 pt-2 w-56 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-in-out z-50"
+          >
+            <div class="bg-white rounded-lg shadow-xl border border-border p-2 flex flex-col gap-1">
+              @for (child of link.children; track child.path) {
+              <a
+                [routerLink]="child.path"
+                class="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary-400/10 rounded-md transition-colors block"
               >
-                <div
-                  class="bg-white rounded-lg shadow-xl border border-border p-2 flex flex-col gap-1"
-                >
-                  @for (child of link.children; track child.path) {
-                    <a
-                      [routerLink]="child.path"
-                      class="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-primary hover:bg-primary-400/10 rounded-md transition-colors block"
-                    >
-                      {{ child.label }}
-                    </a>
-                  }
-                </div>
-              </div>
+                {{ child.label }}
+              </a>
+              }
             </div>
-          } @else {
-            <a [routerLink]="link.path" class="nav-link">
-              {{ link.label }}
-            </a>
-          }
-        }
+          </div>
+        </div>
+        } @else {
+        <a [routerLink]="link.path" class="nav-link">
+          {{ link.label }}
+        </a>
+        } }
       </nav>
 
       <!-- Desktop Actions -->
@@ -62,67 +59,72 @@
         [attr.aria-label]="isMenuOpen ? 'Close menu' : 'Open menu'"
       >
         @if (!isMenuOpen) {
-          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="4" x2="20" y1="12" y2="12" />
-            <line x1="4" x2="20" y1="6" y2="6" />
-            <line x1="4" x2="20" y1="18" y2="18" />
-          </svg>
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <line x1="4" x2="20" y1="12" y2="12" />
+          <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="18" y2="18" />
+        </svg>
         } @else {
-          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
         }
       </button>
     </div>
 
     <!-- Mobile Menu -->
     @if (isMenuOpen) {
-      <div class="md:hidden py-4">
-        <nav class="flex flex-col gap-4">
-          @for (link of navLinks; track link.path) {
-            @if (link.children) {
-              <div class="group flex flex-col gap-3">
-                <a
-                  [routerLink]="link.path"
-                  class="nav-link w-full justify-between"
-                  (click)="closeMenu()"
-                >
-                  {{ link.label }}
-                  <mat-icon
-                    class="w-4! h-4! min-w-4! min-h-4! text-[16px]! leading-none transition-transform group-hover:rotate-180"
-                    svgIcon="platform_solid:chevron-down"
-                  ></mat-icon>
-                </a>
-                <div
-                  class="hidden group-hover:flex flex-col gap-3 pl-4 border-l-2 border-muted ml-3"
-                >
-                  @for (child of link.children; track child.path) {
-                    <a
-                      [routerLink]="child.path"
-                      class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-                      (click)="closeMenu()"
-                    >
-                      {{ child.label }}
-                    </a>
-                  }
-                </div>
-              </div>
-            } @else {
-              <a [routerLink]="link.path" class="nav-link" (click)="closeMenu()">
-                {{ link.label }}
-              </a>
-            }
-          }
-
-          <div class="flex flex-col gap-2 pt-4">
-            <a routerLink="/login" class="auth-link text-center" (click)="closeMenu()"> Sign In </a>
-            <a routerLink="/register" class="primary-btn text-center" (click)="closeMenu()">
-              Get Started
+    <div class="md:hidden py-4">
+      <nav class="flex flex-col gap-4">
+        @for (link of navLinks; track link.path) { @if (link.children) {
+        <div class="flex flex-col">
+          <div class="flex items-center justify-between w-full pr-2">
+            <a [routerLink]="link.path" class="nav-link flex-1" (click)="closeMenu()">
+              {{ link.label }}
             </a>
+            <button
+              type="button"
+              class="p-2 -mr-2 text-muted-foreground hover:text-primary transition-colors focus:outline-none"
+              (click)="toggleDropdown(link.label, $event)"
+              aria-label="Toggle Dropdown"
+            >
+              <mat-icon
+                class="w-4! h-4! min-w-4! min-h-4! text-[16px]! leading-none transition-transform duration-200"
+                [class.rotate-180]="openDropdown === link.label"
+                svgIcon="platform_solid:chevron-down"
+              ></mat-icon>
+            </button>
           </div>
-        </nav>
-      </div>
+
+          @if (openDropdown === link.label) {
+          <div class="flex flex-col gap-3 pl-4 border-l-2 border-muted ml-3 mt-2">
+            @for (child of link.children; track child.path) {
+            <a
+              [routerLink]="child.path"
+              class="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+              (click)="closeMenu()"
+            >
+              {{ child.label }}
+            </a>
+            }
+          </div>
+          }
+        </div>
+        } @else {
+        <a [routerLink]="link.path" class="nav-link" (click)="closeMenu()">
+          {{ link.label }}
+        </a>
+        } }
+
+        <div class="flex flex-col gap-2 pt-4">
+          <a routerLink="/login" class="auth-link text-center" (click)="closeMenu()"> Sign In </a>
+          <a routerLink="/register" class="primary-btn text-center" (click)="closeMenu()">
+            Get Started
+          </a>
+        </div>
+      </nav>
+    </div>
     }
   </div>
 </header>
