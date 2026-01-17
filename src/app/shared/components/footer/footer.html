@@ -1,1 +1,94 @@
-<p>footer works!</p>
+<footer>
+  <!-- Main Footer -->
+  <div class="bg-gray-800 pt-16 pb-8">
+    <div class="max-w-350 mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <!-- Brand & Social -->
+      <div class="space-y-6">
+        <a routerLink="/" class="flex items-center gap-2 group">
+          <div
+            class="p-2 rounded-lg text-white flex items-center justify-center transition-transform group-hover:scale-105"
+          >
+            <mat-icon class="h-6 w-6" svgIcon="platform_solid:heart-logo"></mat-icon>
+          </div>
+          <span class="text-xl font-bold text-white">VitaCare</span>
+        </a>
+        <p class="text-white text-sm leading-relaxed">
+          Your trusted healthcare partner. Providing quality medical care with compassion,
+          expertise, and cutting-edge technology.
+        </p>
+        <div class="flex gap-4">
+          @for (social of socialLinks; track social.icon) {
+            <a
+              [href]="social.url"
+              class="p-2 rounded-lg text-white hover:text-primary hover:bg-gray-800 transition-all border border-gray-700"
+            >
+              <mat-icon [svgIcon]="social.icon" class="w-5 h-5"></mat-icon>
+            </a>
+          }
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white font-bold mb-6 text-lg">Quick Links</h4>
+        <ul class="space-y-4 text-sm text-white">
+          @for (link of quickLinks; track link.path) {
+            <li>
+              <a [routerLink]="link.path" class="hover:text-primary flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary/50"></span>{{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div>
+        <h4 class="text-white font-bold mb-6 text-lg">Services</h4>
+        <ul class="space-y-4 text-sm text-white">
+          @for (link of serviceLinks; track link.path) {
+            <li>
+              <a [routerLink]="link.path" class="hover:text-primary">{{ link.label }}</a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Contact Us -->
+      <div>
+        <h4 class="text-white font-bold mb-6 text-lg">Contact Us</h4>
+        <ul class="space-y-6 text-sm text-white">
+          @for (item of contactInfo; track item.icon) {
+            <li class="flex items-start gap-3">
+              <mat-icon
+                [svgIcon]="item.icon"
+                class="text-primary mt-0.5 shrink-0 w-5 h-5"
+              ></mat-icon>
+              @if (item.lines) {
+                <span>
+                  @for (line of item.lines; track line) {
+                    {{ line }}<br />
+                  }
+                </span>
+              } @else {
+                <a [href]="item.href" class="hover:text-white">{{ item.text }}</a>
+              }
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div
+      class="max-w-350 mx-auto px-4 mt-16 pt-8 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white"
+    >
+      <p>&copy; {{ currentYear }} VitaCare. All rights reserved.</p>
+      <div class="flex gap-6 font-medium text-white">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
