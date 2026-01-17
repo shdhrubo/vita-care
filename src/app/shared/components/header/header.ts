@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostListener, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './header.html',
   styleUrl: './header.scss',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
   private elementRef = inject(ElementRef);
