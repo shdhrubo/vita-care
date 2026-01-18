@@ -61,4 +61,11 @@
     <line x1="22" y1="2" x2="11" y2="13"/>
     <polygon points="22 2 15 22 11 13 2 9 22 2"/>
   </symbol>
+  <!-- Testimonial Icons -->
+  <symbol id="star" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+  </symbol>
+  <symbol id="quote" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+    <path d="M6 17h3l2-4V7H5v6h3L6 17zM14 17h3l2-4V7h-6v6h3L14 17z"/>
+  </symbol>
 </svg>
