@@ -2,12 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
-interface FaqItem {
-  question: string;
-  answer: string;
-  isOpen: boolean;
-}
-
 @Component({
   selector: 'app-faq-section',
   standalone: true,
