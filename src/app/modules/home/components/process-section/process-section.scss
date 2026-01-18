@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+/* Simple Hover Transition */
+.group {
+  cursor: default;
+
+  &:hover {
+    .shadow-xl {
+      box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+    }
+  }
+}
+
+/* Ensure icons rotate slightly on hover for a modern feel */
+.group:hover mat-icon {
+  transform: rotate(5deg) scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  /* Stacked layout for mobile is handled by grid, 
+     but we ensure the vertical divider stays centered */
+  .lg\:hidden {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

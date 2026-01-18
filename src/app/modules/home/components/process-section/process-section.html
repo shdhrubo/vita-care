@@ -1,0 +1,64 @@
+<section class="py-24 bg-white relative overflow-hidden">
+  <div class="max-w-350 mx-auto px-4 relative z-10">
+    <!-- Section Header -->
+    <div class="text-center max-w-2xl mx-auto mb-20 space-y-4">
+      <span class="text-sm font-black text-primary tracking-[0.3em] uppercase">Process</span>
+      <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+        How it <span class="text-primary italic">works</span>
+      </h2>
+      <div class="w-20 h-1.5 bg-primary/20 mx-auto rounded-full mt-4"></div>
+    </div>
+
+    <!-- Steps Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 border border-slate-100 p-8 rounded-2xl shadow-sm"
+    >
+      @for (step of steps; track step.id; let last = $last) {
+        <div class="relative flex flex-col items-center text-center group">
+          <!-- Icon & Connector Wrapper -->
+          <div class="relative w-full flex justify-center mb-8">
+            <!-- Step Connector Line (Desktop Only) -->
+            @if (!last) {
+              <div
+                class="hidden lg:block absolute top-1/2 left-[60%] w-[80%] h-0.5 border-t-2 border-dashed border-slate-200 z-0 translate-y-[-50%]"
+              ></div>
+            }
+
+            <!-- Icon Circle -->
+            <div
+              class="relative z-10 w-24 h-24 rounded-full bg-slate-50 border-2 border-white shadow-xl flex items-center justify-center transition-all duration-500 group-hover:bg-primary group-hover:scale-110"
+            >
+              <!-- Step Number Badge -->
+              <div
+                class="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center text-sm font-black shadow-lg border border-slate-100 group-hover:bg-slate-900 group-hover:text-white transition-all"
+              >
+                {{ step.id }}
+              </div>
+              <mat-icon
+                [svgIcon]="step.icon"
+                class="w-10 h-10 text-primary group-hover:text-white transition-all"
+              ></mat-icon>
+            </div>
+          </div>
+
+          <!-- Text Content -->
+          <div class="space-y-3">
+            <h3
+              class="text-2xl font-black text-slate-900 group-hover:text-primary transition-colors"
+            >
+              {{ step.title }}
+            </h3>
+            <p class="text-slate-500 font-medium leading-relaxed max-w-[280px] mx-auto">
+              {{ step.description }}
+            </p>
+          </div>
+
+          <!-- Mobile Only Bottom Divider -->
+          @if (!last) {
+            <div class="lg:hidden w-0.5 h-12 border-l-2 border-dashed border-slate-200 my-4"></div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>

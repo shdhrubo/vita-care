@@ -7,6 +7,7 @@ import { AboutSection } from '../../components/about-section/about-section';
 import { PartnersSection } from '../../components/partners-section/partners-section';
 import { MobileAppSection } from '../../components/mobile-app-section/mobile-app-section';
 import { StatsSection } from '../../components/stats-section/stats-section';
+import { ProcessSection } from '../../components/process-section/process-section';
 
 @Component({
   selector: 'app-home-page-container',
@@ -19,6 +20,7 @@ import { StatsSection } from '../../components/stats-section/stats-section';
     PartnersSection,
     MobileAppSection,
     StatsSection,
+    ProcessSection,
   ],
   templateUrl: './home-page-container.html',
   styleUrl: './home-page-container.scss',
