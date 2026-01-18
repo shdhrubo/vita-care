@@ -52,7 +52,7 @@ export class TestimonialSection {
       image: 'assets/images/avatar-2.png',
       quote:
         'The platform is intuitive and user-friendly. I appreciate the reminders and digital prescriptions. Excellent service overall.',
-      rating: 5,
+      rating: 4,
     },
     {
       name: 'Olivia Brown',

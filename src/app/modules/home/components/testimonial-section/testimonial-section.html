@@ -66,9 +66,11 @@
             <!-- Stars -->
             <div class="flex gap-1 mb-8">
               @for (star of [1, 2, 3, 4, 5]; track star) {
-                <div class="text-[#FACC15]">
-                  <mat-icon svgIcon="platform_solid:star" class="w-5 h-5 fill-current"></mat-icon>
-                </div>
+                @if (star <= item.rating) {
+                  <div class="text-[#FFD700]">
+                    <mat-icon svgIcon="platform_solid:star" class="w-5 h-5 fill-current"></mat-icon>
+                  </div>
+                }
               }
             </div>
 
