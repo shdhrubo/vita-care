@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Moves by exactly 1/3 of the total content width */
+    transform: translateX(calc(-33.333%));
+  }
+}
+
+@keyframes ping-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.pause-animation {
+  animation-play-state: paused;
+}
+
+.animate-ping-slide {
+  animation: ping-slide 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .animate-marquee {
+    animation-duration: 25s;
+  }
+}

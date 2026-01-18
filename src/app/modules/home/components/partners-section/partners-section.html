@@ -1,0 +1,40 @@
+<section class="py-20 bg-white overflow-hidden relative group/section">
+  <div class="max-w-350 mx-auto px-4 relative z-10">
+    <!--  Section Label -->
+    <div
+      class="flex flex-col items-center justify-center gap-6 mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000"
+    >
+      <div class="inline-flex items-center gap-3 px-4 py-2">
+        <span class="text-sm font-black text-primary tracking-[0.3em] uppercase"
+          >Our Strategic Partners</span
+        >
+      </div>
+    </div>
+
+    <!-- The Infinite Logo Belt -->
+    <div class="relative overflow-hidden">
+      <!-- Gradient Edge Masks for High-End Fading -->
+
+      <!-- Moving Track -->
+      <div class="flex items-center gap-12 md:gap-24 animate-marquee py-6 hover:pause-animation">
+        @for (logo of logoBelt; track $index) {
+          <div
+            class="flex items-center gap-4 shrink-0 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700 cursor-pointer group scale-100"
+          >
+            <div
+              class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-slate-50 flex items-center justify-center border border-slate-100 group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/20 transition-all duration-500"
+            >
+              <mat-icon [svgIcon]="logo.icon" class="w-6 h-6 md:w-8 md:h-8"></mat-icon>
+            </div>
+
+            <span
+              class="text-xl md:text-3xl font-black text-slate-900 tracking-tighter transition-colors group-hover:text-primary"
+            >
+              {{ logo.name }}
+            </span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
