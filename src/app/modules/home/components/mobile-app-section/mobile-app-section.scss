@@ -1,0 +1,52 @@
+:host {
+  display: block;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Base Entrance Animations */
+.animate-in {
+  animation-fill-mode: both;
+}
+
+@keyframes refined-slide-left {
+  from {
+    opacity: 0;
+    transform: translateX(-4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes refined-slide-right {
+  from {
+    opacity: 0;
+    transform: translateX(4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-from-left-8 {
+  animation: refined-slide-left 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-in-from-right-8 {
+  animation: refined-slide-right 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}

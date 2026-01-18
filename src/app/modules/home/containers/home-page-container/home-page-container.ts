@@ -5,6 +5,8 @@ import { TestimonialSection } from '../../components/testimonial-section/testimo
 import { ServicesSection } from '../../components/services-section/services-section';
 import { AboutSection } from '../../components/about-section/about-section';
 import { PartnersSection } from '../../components/partners-section/partners-section';
+import { MobileAppSection } from '../../components/mobile-app-section/mobile-app-section';
+import { StatsSection } from '../../components/stats-section/stats-section';
 
 @Component({
   selector: 'app-home-page-container',
@@ -15,6 +17,8 @@ import { PartnersSection } from '../../components/partners-section/partners-sect
     ServicesSection,
     AboutSection,
     PartnersSection,
+    MobileAppSection,
+    StatsSection,
   ],
   templateUrl: './home-page-container.html',
   styleUrl: './home-page-container.scss',
