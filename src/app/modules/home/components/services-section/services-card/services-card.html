@@ -1,0 +1,70 @@
+<div
+  class="group relative h-full bg-white rounded-[2.5rem] border border-slate-100/60 hover:border-primary/30 transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(139,92,246,0.18)] flex flex-col overflow-hidden cursor-pointer active:scale-[0.98]"
+>
+  <!-- Content Area Wrapper -->
+  <div class="flex flex-col h-full relative">
+    <!-- Image Header with Cutout Pattern -->
+    <div class="relative h-30 overflow-hidden">
+      <!-- <img
+        [src]="item.image"
+        class="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+      /> -->
+
+      <!-- Primary Tone Overlay -->
+      <div
+        class="absolute inset-0 bg-primary/20 mix-blend-overlay group-hover:bg-primary/10 transition-colors duration-700"
+      ></div>
+
+      <!-- Masking Curve -->
+      <div class="absolute -bottom-px left-0 w-full h-12 bg-white rounded-t-[3rem]"></div>
+
+      <!-- Specialization Badge -->
+    </div>
+
+    <!-- Centered Overlapping Icon Badge -->
+    <div class="relative flex justify-center -mt-10 mb-6 px-10">
+      <div
+        class="w-20 h-20 rounded-3xl bg-white shadow-xl shadow-slate-900/5 flex items-center justify-center transition-all duration-500 group-hover:bg-primary group-hover:text-white group-hover:rotate-[360deg] group-hover:scale-110 group-hover:shadow-primary/30 group-hover:rounded-[1.5rem]"
+      >
+        <mat-icon [svgIcon]="item.icon" class="w-10 h-10"></mat-icon>
+      </div>
+    </div>
+
+    <!-- Text content -->
+    <div class="p-10 pt-0 flex flex-col grow text-center">
+      <h3
+        class="text-2xl font-black text-slate-900 mb-4 group-hover:text-primary transition-colors duration-300 tracking-tight"
+      >
+        {{ item.title }}
+      </h3>
+
+      <p
+        class="text-slate-500 font-medium leading-relaxed text-lg opacity-80 group-hover:opacity-100 transition-opacity duration-300 grow"
+      >
+        {{ item.description }}
+      </p>
+
+      <!-- Advanced Footer Action -->
+      <div class="mt-8 pt-8 border-t border-slate-50 flex flex-col items-center space-y-4">
+        <div
+          class="flex items-center gap-2 text-sm font-black text-slate-400 group-hover:text-primary tracking-widest uppercase transition-all duration-300 translate-y-0 group-hover:-translate-y-1"
+        >
+          Explore Details
+          <mat-icon svgIcon="platform_solid:chevron-down" class="w-4 h-4 -rotate-90"></mat-icon>
+        </div>
+
+        <!-- Interactive progress bar -->
+        <div class="w-16 h-1 bg-slate-100 rounded-full overflow-hidden">
+          <div
+            class="w-0 h-full bg-primary group-hover:w-full transition-all duration-700 ease-out"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative Accent Card-Level -->
+  <div
+    class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:bg-primary/10 transition-colors"
+  ></div>
+</div>

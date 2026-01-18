@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+/* Superior Premium Entrance Animations */
+.animate-in {
+  animation-fill-mode: both;
+}
+
+@keyframes refined-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(4rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.slide-in-from-bottom-12 {
+  animation: refined-slide-up 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-in-from-bottom-8 {
+  animation: refined-slide-up 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Grid Patterns for Scientific/Clinical feel */
+section {
+  background-image: radial-gradient(circle at 1px 1px, rgba(139, 92, 246, 0.04) 1px, transparent 0);
+  background-size: 40px 40px;
+}

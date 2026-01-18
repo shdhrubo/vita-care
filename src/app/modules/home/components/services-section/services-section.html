@@ -1,0 +1,79 @@
+<section class="relative py-24 md:py-32 bg-slate-50 overflow-hidden">
+  <!-- Decorative Background Elements -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div
+      class="absolute top-0 right-[-10%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[120px]"
+    ></div>
+    <div
+      class="absolute bottom-0 left-[-5%] w-[400px] h-[400px] bg-purple-100/30 rounded-full blur-[100px]"
+    ></div>
+  </div>
+
+  <div class="max-w-350 mx-auto px-4 relative z-10">
+    <!-- Centered Header -->
+    <div class="text-center max-w-3xl mx-auto mb-20 space-y-6">
+      <div
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm border border-slate-100 text-xs font-black text-primary tracking-[0.2em] uppercase"
+      >
+        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+        Experience Excellence
+      </div>
+      <h2
+        class="text-4xl md:text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight"
+      >
+        Our Specialized <br />
+        <span class="text-primary italic">Medical Services</span>
+      </h2>
+      <p class="text-lg md:text-xl text-slate-500 font-medium leading-relaxed max-w-2xl mx-auto">
+        Delivering comprehensive healthcare solutions through clinical expertise, advanced
+        technology, and human compassion.
+      </p>
+    </div>
+
+    <!-- Services Grid: Clean 3-column layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+      @for (service of services; track $index) {
+        <div
+          class="animate-in fade-in slide-in-from-bottom-12 duration-1000"
+          [style.animation-delay]="$index * 150 + 'ms'"
+        >
+          <app-services-card [item]="service" [$index]="$index"></app-services-card>
+        </div>
+      }
+    </div>
+
+    <!-- Bottom Call to Action: Modern Banner Style -->
+    <div
+      class="mt-24 text-center animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-500"
+    >
+      <div
+        class="relative p-10 md:p-16 rounded-[3rem] bg-slate-900 text-white shadow-2xl overflow-hidden group"
+      >
+        <div
+          class="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+        ></div>
+        <div
+          class="absolute -top-24 -right-24 w-80 h-80 bg-primary/20 rounded-full blur-[100px]"
+        ></div>
+
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+          <div class="text-left space-y-4 max-w-2xl">
+            <h3 class="text-3xl md:text-4xl font-bold tracking-tight">
+              Need a specialized consult?
+            </h3>
+            <p class="text-slate-400 text-lg md:text-xl font-medium">
+              Our medical coordinators are available 24/7 to help you choose the right specialist
+              for your unique health journey.
+            </p>
+          </div>
+          <a
+            href=""
+            class="px-10 py-5 bg-primary hover:bg-primary-600 text-white font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-primary/30 hover:-translate-y-1 active:scale-95 whitespace-nowrap text-lg"
+          >
+            Book Orientation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

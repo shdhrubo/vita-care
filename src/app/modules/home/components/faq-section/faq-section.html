@@ -38,7 +38,7 @@
             class="w-full flex items-center justify-between p-6 md:px-8 text-left cursor-pointer focus:outline-none"
           >
             <span
-              class="text-lg md:text-xl font-semibold text-gray-800 transition-colors group-hover:text-primary"
+              class="text-lg font-semibold text-gray-800 transition-colors group-hover:text-primary"
               [class.text-primary]="faq.isOpen"
             >
               {{ faq.question }}
@@ -59,7 +59,7 @@
           </button>
 
           <div
-            class="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
+            class="grid transition-[grid-template-rows] duration-500 ease-in-out"
             [class.grid-rows-[1fr]]="faq.isOpen"
             [class.grid-rows-[0fr]]="!faq.isOpen"
           >
