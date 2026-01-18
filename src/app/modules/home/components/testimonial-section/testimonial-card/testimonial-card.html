@@ -1,0 +1,50 @@
+<div
+  class="h-full bg-gray-50 rounded-3xl p-8 md:p-10 relative hover:-translate-y-2 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 border border-transparent hover:border-primary/10 group cursor-default"
+>
+  <!-- Quote Icon -->
+  <div class="absolute top-8 right-8 text-primary/10 transition-colors group-hover:text-primary/20">
+    <mat-icon svgIcon="platform_solid:quote" class="w-12! h-12! text-[48px]!"></mat-icon>
+  </div>
+
+  <!-- Stars -->
+  <div class="flex gap-1 mb-8">
+    @for (star of [1, 2, 3, 4, 5]; track star) {
+      @if (star <= item.rating) {
+        <div class="text-[#FFD700]">
+          <mat-icon svgIcon="platform_solid:star" class="w-5 h-5 fill-current"></mat-icon>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Content -->
+  <blockquote
+    class="text-lg text-gray-700 leading-relaxed mb-8 relative z-10 font-normal text-pretty"
+  >
+    "{{ item.quote }}"
+  </blockquote>
+
+  <!-- Author -->
+  <div class="flex items-center gap-4 mt-auto pt-8 border-t border-gray-100">
+    <div class="relative">
+      <div
+        class="w-16 h-16 rounded-full p-0.5 bg-white shadow-md ring-2 ring-white overflow-hidden shrink-0"
+      >
+        <img
+          [src]="item.image"
+          [alt]="item.name"
+          class="w-full h-full object-cover object-center scale-110"
+        />
+      </div>
+      <div
+        class="absolute -bottom-1 -right-1 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-white border-2 border-white shadow-sm z-10"
+      >
+        <mat-icon svgIcon="platform_solid:quote" class="w-3! h-3! text-[12px]!"></mat-icon>
+      </div>
+    </div>
+    <div>
+      <h4 class="font-bold text-gray-900 leading-tight">{{ item.name }}</h4>
+      <p class="text-sm text-primary font-semibold tracking-wide uppercase mt-1">{{ item.role }}</p>
+    </div>
+  </div>
+</div>

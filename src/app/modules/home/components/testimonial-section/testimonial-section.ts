@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, inject } fro
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
-interface Testimonial {
+import { TestimonialCard } from './testimonial-card/testimonial-card';
+
+export interface Testimonial {
   name: string;
   role: string;
   image: string;
@@ -13,7 +15,7 @@ interface Testimonial {
 @Component({
   selector: 'app-testimonial-section',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, TestimonialCard],
   templateUrl: './testimonial-section.html',
   styleUrl: './testimonial-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
