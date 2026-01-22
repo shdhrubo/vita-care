@@ -29,3 +29,6 @@ body {
   background-color: var(--color-background);
   color: var(--color-black);
 }
+html {
+  scroll-behavior: smooth;
+}

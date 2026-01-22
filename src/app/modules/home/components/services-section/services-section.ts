@@ -1,14 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServicesCard } from './services-card/services-card';
-
-export interface Service {
-  icon: string;
-  title: string;
-  description: string;
-  link: string;
-  image: string;
-}
+import { Service } from '../../contracts/home-page.contracts';
 
 @Component({
   selector: 'app-services-section',

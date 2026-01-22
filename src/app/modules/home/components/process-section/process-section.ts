@@ -1,13 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-
-interface Step {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-}
+import { Step } from '../../contracts/home-page.contracts';
 
 @Component({
   selector: 'app-process-section',

@@ -1,11 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-
-interface Partner {
-  name: string;
-  icon: string;
-}
+import { Partner } from '../../contracts/home-page.contracts';
 
 @Component({
   selector: 'app-partners-section',

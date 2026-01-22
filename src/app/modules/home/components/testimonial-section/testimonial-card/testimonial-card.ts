@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { Testimonial } from '../testimonial-section';
+import { Testimonial } from '../../../contracts/home-page.contracts';
 
 @Component({
   selector: 'app-testimonial-card',

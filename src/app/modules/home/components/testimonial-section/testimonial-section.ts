@@ -3,14 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
 import { TestimonialCard } from './testimonial-card/testimonial-card';
-
-export interface Testimonial {
-  name: string;
-  role: string;
-  image: string;
-  quote: string;
-  rating: number;
-}
+import { Testimonial } from '../../contracts/home-page.contracts';
 
 @Component({
   selector: 'app-testimonial-section',

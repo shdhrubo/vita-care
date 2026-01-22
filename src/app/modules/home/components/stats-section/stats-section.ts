@@ -1,11 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Stat {
-  value: string;
-  label: string;
-  description: string;
-}
+import { Stat } from '../../contracts/home-page.contracts';
 
 @Component({
   selector: 'app-stats-section',
