@@ -52,8 +52,24 @@
 
       <!-- Desktop Actions -->
       <div class="hidden md:flex items-center gap-3">
-        <a routerLink="/login" class="auth-link">Sign In</a>
-        <a routerLink="/register" class="primary-btn">Get Started</a>
+        @if (auth.isAuthenticated$ | async) {
+          <div class="flex items-center gap-3">
+            @if (auth.user$ | async; as user) {
+              <div class="flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-full">
+                <mat-icon class="w-6 h-6 text-slate-700" svgIcon="platform_solid:user"> </mat-icon>
+                <span
+                  class="text-sm font-bold text-slate-700 max-w-25 truncate"
+                  [title]="user?.name"
+                  >{{ user?.name }}</span
+                >
+              </div>
+            }
+            <button (click)="logout()" class="auth-link">Log Out</button>
+          </div>
+        } @else {
+          <button (click)="login()" class="auth-link">Sign In</button>
+          <button class="primary-btn">Get Started</button>
+        }
       </div>
 
       <!-- Mobile Menu Button -->
@@ -123,11 +139,29 @@
             }
           }
 
-          <div class="flex flex-col gap-2 pt-4">
-            <a routerLink="/login" class="auth-link text-center" (click)="closeMenu()"> Sign In </a>
-            <a routerLink="/register" class="primary-btn text-center" (click)="closeMenu()">
-              Get Started
-            </a>
+          <div class="flex flex-col gap-2 pt-4 border-t border-slate-100 mt-2">
+            @if (auth.isAuthenticated$ | async) {
+              @if (auth.user$ | async; as user) {
+                <div class="flex items-center gap-3 px-2 py-2 mb-2">
+                  <mat-icon class="w-6 h-6 text-slate-700" svgIcon="platform_solid:user">
+                  </mat-icon>
+                  <div class="flex flex-col">
+                    <span class="text-sm font-bold text-slate-900" [title]="user?.name">{{
+                      user?.name
+                    }}</span>
+                  </div>
+                </div>
+              }
+              <button
+                (click)="logout()"
+                class="w-full py-3 text-center text-red-500 font-bold bg-red-50 rounded-xl"
+              >
+                Log Out
+              </button>
+            } @else {
+              <button (click)="login()" class="auth-link text-center w-full">Sign In</button>
+              <button class="primary-btn text-center w-full">Get Started</button>
+            }
           </div>
         </nav>
       </div>

@@ -13,6 +13,7 @@ const auth0Config = mergeApplicationConfig(appConfig, {
       authorizationParams: {
         redirect_uri: window.location.origin,
       },
+      cacheLocation: 'localstorage',
     }),
   ],
 });

@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
 
       iconRegistry.addSvgIconSetInNamespace(
         'platform_solid',
-        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/platform-solid.svg')
+        sanitizer.bypassSecurityTrustResourceUrl('assets/icons/platform-solid.svg'),
       );
     }),
   ],
