@@ -8,15 +8,16 @@ export class AuthSyncService {
   private auth = inject(AuthService);
   private userService = inject(UserService);
 
-  /**
-   * Call this once during app initialization.
-   * It waits for Auth0 to finish loading, then — if the user
-   * is authenticated — upserts their profile in the backend.
-   */
   syncUserOnLogin(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isFreshLogin = urlParams.has('code') && urlParams.has('state');
+
+    if (!isFreshLogin) {
+      return;
+    }
+
     this.auth.isLoading$
       .pipe(
-        // Wait until Auth0 has finished its initialization
         filter((loading) => !loading),
         take(1),
         switchMap(() => this.auth.user$),
@@ -26,12 +27,9 @@ export class AuthSyncService {
           this.userService.upsertUser({
             Email: user.email ?? '',
             Name: user.name ?? '',
-          })
-        )
+          }),
+        ),
       )
-      .subscribe({
-        next: () => console.log('[AuthSync] User synced with backend.'),
-        error: (err) => console.error('[AuthSync] Failed to sync user:', err),
-      });
+      .subscribe();
   }
 }
