@@ -1,1 +1,9 @@
-<p>doctors-list works!</p>
+<app-doctors-listing
+  [doctors]="doctors()"
+  [totalCount]="totalCount()"
+  [isLoading]="loading()"
+  [isInitialLoading]="initialLoading()"
+  [hasMore]="hasMore()"
+  [searchControl]="searchControl"
+  (scrolled)="onScrollReached()"
+></app-doctors-listing>

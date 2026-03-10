@@ -1,0 +1,142 @@
+<div class="min-h-screen bg-[#fafafb] pt-28 pb-32">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Ultra Modern Hero -->
+    <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
+      <div
+        class="inline-flex items-center justify-center px-4 py-1.5 mb-6 rounded-full bg-primary/10 text-primary font-bold text-sm shadow-sm ring-1 ring-primary/20"
+      >
+        <span class="relative flex h-2 w-2 mr-2.5">
+          <span
+            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/75"
+          ></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+        </span>
+        Our Doctors
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-black text-[#0f172a] tracking-tight leading-[1.12] mb-6">
+        Find the perfect doctor, <br class="hidden sm:block" />
+        <span class="text-primary">book instantly.</span>
+      </h1>
+    </div>
+
+    <!-- Search Section -->
+    <div
+      class="max-w-2xl mx-auto mb-20 relative z-10 animate-fade-in-up"
+      style="animation-delay: 100ms"
+    >
+      <div class="relative group">
+        <div
+          class="relative bg-white rounded-full flex items-center p-3 shadow-xl shadow-slate-200/40 border-2 border-slate-50 ring-4 ring-white/80 transition-all group-focus-within:ring-primary/15 group-focus-within:border-primary/20"
+        >
+          <div
+            class="pl-5 text-slate-400 flex items-center justify-center transition-colors group-focus-within:text-primary shrink-0"
+          >
+            <mat-icon class="w-6! h-6!" svgIcon="platform_solid:search"></mat-icon>
+          </div>
+
+          <input
+            [formControl]="searchControl"
+            type="text"
+            placeholder="Search providers by name, specialty, or department..."
+            class="flex-1 w-full py-3.5 px-4 text-lg font-bold text-slate-900 focus:outline-none focus:ring-0 placeholder:font-medium transition-all"
+          />
+
+          @if (searchControl.value) {
+            <button
+              (click)="searchControl.setValue('')"
+              class="mr-2 w-12 h-12 flex shrink-0 items-center justify-center rounded-full bg-slate-50 hover:bg-red-50 text-slate-400 hover:text-red-500 transition-all active:scale-90 border border-slate-100 hover:border-red-100"
+              aria-label="Clear search"
+            >
+              <mat-icon class="w-5! h-5!" svgIcon="platform_solid:close"></mat-icon>
+            </button>
+          }
+        </div>
+      </div>
+
+      <!-- Stats Pill -->
+      <div
+        class="mt-8 flex justify-center opacity-0 animate-fade-in"
+        style="animation-delay: 300ms; animation-fill-mode: forwards"
+      >
+        @if (!isLoading && totalCount > 0) {
+          <div
+            class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-white rounded-full border border-slate-200/60 shadow-sm transition-transform hover:scale-105"
+          >
+            <div class="w-2.5 h-2.5 rounded-full bg-green-500 relative">
+              <div class="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-75"></div>
+            </div>
+            <span class="text-xs font-black text-slate-700 uppercase tracking-[0.1em]"
+              >{{ totalCount }} Experts Available</span
+            >
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Doctors Grid -->
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-16 relative z-0 auto-rows-fr"
+    >
+      @for (doctor of doctors; track doctor.Id; let i = $index) {
+        <div
+          class="opacity-0 animate-fade-in-up h-full"
+          [style.animation-delay]="(i % 10) * 80 + 'ms'"
+          style="animation-fill-mode: forwards"
+        >
+          <app-doctor-card [doctor]="doctor"></app-doctor-card>
+        </div>
+      }
+    </div>
+
+    <!-- Empty State -->
+    @if (!isLoading && doctors.length === 0 && !isInitialLoading) {
+      <div
+        class="opacity-0 animate-fade-in max-w-2xl mx-auto w-full"
+        style="animation-fill-mode: forwards"
+      >
+        <div
+          class="flex flex-col items-center justify-center py-20 px-8 bg-white rounded-[3rem] border-2 border-dashed border-slate-200 text-center shadow-sm hover:shadow-lg transition-shadow duration-500"
+        >
+          <div
+            class="w-24 h-24 bg-slate-50 rounded-[1.5rem] flex items-center justify-center mb-8 ring-[12px] ring-slate-50/50"
+          >
+            <mat-icon class="w-12! h-12! text-slate-300" svgIcon="platform_solid:search"></mat-icon>
+          </div>
+          <h3 class="text-3xl font-black text-slate-900 mb-4 tracking-tight">
+            No Specialist Doctor Found
+          </h3>
+          <p class="text-slate-500 font-medium text-lg max-w-md mx-auto mb-10 leading-relaxed">
+            We couldn't find any medical experts matching your current search criteria. Try a
+            different term or specialty.
+          </p>
+        </div>
+      </div>
+    }
+
+    <!-- Loading Indicators -->
+    @if (isLoading) {
+      <div class="py-16 flex justify-center w-full">
+        <app-loading
+          [message]="
+            doctors.length === 0
+              ? 'Connecting to medical network...'
+              : 'Bridging more specialists...'
+          "
+        ></app-loading>
+      </div>
+    }
+
+    <!-- Infinite Scroll Anchor -->
+    <div #scrollAnchor class="h-24 flex items-center justify-center w-full mt-8">
+      @if (!isLoading && doctors.length > 0 && !hasMore) {
+        <div class="flex items-center gap-6 w-full max-w-md opacity-60">
+          <div class="flex-1 h-[2px] rounded-full bg-slate-200"></div>
+          <span class="text-[12px] font-black text-slate-400 uppercase tracking-[0.25em]"
+            >End of Directory</span
+          >
+          <div class="flex-1 h-[2px] rounded-full bg-slate-200"></div>
+        </div>
+      }
+    </div>
+  </div>
+</div>
