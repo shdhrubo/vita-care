@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideAppInitializer, inject } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,7 +10,7 @@ import { AuthSyncService } from './core/services/auth-sync.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     // Enable DI-based interceptors
     provideHttpClient(withInterceptorsFromDi()),
     // Register the API interceptor
