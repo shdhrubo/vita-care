@@ -1,12 +1,13 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 import { Doctor } from '../../../../core/contracts/doctor.contracts';
 
 @Component({
   selector: 'app-doctor-card',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, RouterLink],
   templateUrl: './doctor-card.html',
   styleUrl: './doctor-card.scss',
   changeDetection: ChangeDetectionStrategy.OnPush

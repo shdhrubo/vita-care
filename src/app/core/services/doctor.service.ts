@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { DoctorListResponse } from '../contracts/doctor.contracts';
+import { Doctor, DoctorListResponse } from '../contracts/doctor.contracts';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,9 @@ export class DoctorService {
       .set('pageSize', pageSize.toString());
 
     return this.http.get<DoctorListResponse>(this.apiUrl, { params });
+  }
+
+  getDoctorById(id: string): Observable<Doctor> {
+    return this.http.get<Doctor>(`${this.apiUrl}/${id}`);
   }
 }

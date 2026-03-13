@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-doctors',
   standalone: true,
   imports: [CommonModule, RouterOutlet],
   templateUrl: './doctors.component.html',

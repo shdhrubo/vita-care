@@ -1,0 +1,9 @@
+<div class="min-h-screen bg-[#fafafb] pt-28 pb-32">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <app-doctor-profile-details
+      [doctor]="doctor"
+      (editProfileClicked)="onEditProfile()"
+      (bookAppointmentClicked)="onBookAppointment()"
+    ></app-doctor-profile-details>
+  </div>
+</div>

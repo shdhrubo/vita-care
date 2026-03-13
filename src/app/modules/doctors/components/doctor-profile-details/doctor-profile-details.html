@@ -1,0 +1,167 @@
+<div class="animate-fade-in-up">
+  <!-- Top Action Bar -->
+  <div class="flex flex-col-reverse sm:flex-row justify-end items-center gap-4 mb-8">
+    <button
+      (click)="editProfileClicked.emit()"
+      class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-slate-50 text-slate-700 font-bold rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200 cursor-pointer"
+    >
+      <mat-icon class="w-5! h-5!" svgIcon="platform_solid:edit-pencil">edit</mat-icon>
+      <div>Edit Profile</div>
+    </button>
+
+    <button
+      (click)="bookAppointmentClicked.emit()"
+      class="w-full sm:w-auto relative overflow-hidden group/btn flex items-center justify-center gap-2 px-8 py-3 bg-slate-900 text-white font-bold rounded-xl transition-all duration-300 hover:bg-primary shadow-lg shadow-slate-900/10 hover:shadow-primary/20 hover:-translate-y-0.5 active:scale-[0.98] cursor-pointer"
+    >
+      <span class="relative z-10 transition-transform">Book Appointment</span>
+      <mat-icon
+        class="w-5! h-5! transition-transform group-hover/btn:translate-x-1"
+        svgIcon="platform_solid:calendar"
+      ></mat-icon>
+    </button>
+  </div>
+
+  <!-- Profile Details Card -->
+  <div class="bg-white rounded-[2rem] border border-border shadow-sm overflow-hidden relative">
+    <!-- Subtle top gradient -->
+    <div class="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-primary-400 to-primary"></div>
+
+    <div class="p-8 sm:p-12">
+      <!-- Header / Avatar section -->
+      <div class="flex flex-col sm:flex-row gap-8 items-start mb-12">
+        <div class="relative shrink-0 mx-auto sm:mx-0">
+          <div
+            class="w-32 h-32 rounded-[2rem] bg-slate-50 flex items-center justify-center text-primary text-4xl font-bold border border-slate-100 shadow-inner"
+          >
+            {{ getInitials(doctor.Name) }}
+          </div>
+          <div
+            class="absolute bottom-2 right-2 w-6 h-6 bg-green-500 border-4 border-white rounded-full z-10"
+            title="Online"
+          ></div>
+        </div>
+
+        <div class="flex-1 text-center sm:text-left pt-2">
+          <div class="flex items-center justify-center sm:justify-start gap-2 mb-3">
+            <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              {{ doctor.Name }}
+            </h1>
+          </div>
+          <div
+            class="inline-flex items-center px-4 py-2 rounded-xl text-sm font-bold bg-primary/10 text-primary uppercase tracking-wider mb-4"
+          >
+            {{ doctor.Specializations }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Detail Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-12">
+        <!-- Contact Info -->
+        <div class="space-y-6">
+          <h2
+            class="text-lg font-black text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-3"
+          >
+            Contact Information
+          </h2>
+
+          <div
+            class="flex items-center gap-4 text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 border border-slate-200 shadow-sm"
+            >
+              <mat-icon class="w-5! h-5! text-primary" svgIcon="platform_solid:building"></mat-icon>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
+                Department
+              </p>
+              <p class="font-semibold text-slate-800">{{ doctor.Department }}</p>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center gap-4 text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 border border-slate-200 shadow-sm"
+            >
+              <mat-icon class="w-5! h-5! text-primary" svgIcon="platform_solid:mail"></mat-icon>
+            </div>
+            <div class="overflow-hidden">
+              <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
+                Email Address
+              </p>
+              <p class="font-semibold text-slate-800 truncate">{{ doctor.Email }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Availability Details -->
+        <div class="space-y-6">
+          <h2
+            class="text-lg font-black text-slate-900 uppercase tracking-widest border-b border-slate-100 pb-3"
+          >
+            Availability
+          </h2>
+
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+            <div class="flex items-center justify-between mb-5">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"
+                >Weekly Schedule</span
+              >
+              <span
+                class="text-[11px] font-bold px-3 py-1.5 rounded-lg"
+                [ngClass]="
+                  isAvailableToday() ? 'bg-green-100 text-green-700' : 'bg-slate-200 text-slate-500'
+                "
+              >
+                {{ isAvailableToday() ? 'Available Today' : 'Next Available' }}
+              </span>
+            </div>
+            <div class="flex items-center justify-between gap-2">
+              @for (day of days; track $index) {
+                <div
+                  class="flex-1 aspect-square max-w-[3rem] rounded-xl flex items-center justify-center text-xs font-black transition-all"
+                  [title]="day.full"
+                  [ngClass]="
+                    doctor.AvailableDays[$index] === 1
+                      ? 'bg-primary text-white shadow-md shadow-primary/20 ring-2 ring-primary/30 ring-offset-2'
+                      : 'bg-white text-slate-300 border border-slate-200'
+                  "
+                >
+                  {{ day.short }}
+                </div>
+              }
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-4"
+              >Timing Slots</span
+            >
+            <div class="flex flex-wrap gap-3">
+              @for (slot of doctor.Slots; track slot.Value) {
+                <span
+                  class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-700 shadow-sm"
+                >
+                  <mat-icon
+                    class="w-4! h-4! text-primary/70"
+                    svgIcon="platform_solid:calendar"
+                  ></mat-icon>
+                  {{ slot.ViewValue }}
+                </span>
+              } @empty {
+                <span
+                  class="text-sm font-medium text-slate-400 italic bg-white px-4 py-2 rounded-xl border border-slate-100"
+                  >No specific slots listed</span
+                >
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

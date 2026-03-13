@@ -122,7 +122,8 @@
 
   <!-- Action Footer -->
   <div class="px-6 pb-6 mt-auto">
-    <button
+    <a
+      [routerLink]="['/doctors', doctor.Id]"
       class="w-full relative overflow-hidden group/btn flex items-center justify-center gap-2 py-[0.875rem] px-5 bg-slate-900 text-white rounded-xl font-bold transition-all duration-300 hover:bg-primary hover:shadow-xl hover:shadow-slate-900/10 active:scale-[0.98] cursor-pointer"
     >
       <span class="relative z-10 transition-transform duration-300 group-hover/btn:-translate-x-1"
@@ -132,6 +133,6 @@
         class="w-5! h-5! relative z-10 opacity-0 -translate-x-4 transition-all duration-300 group-hover/btn:opacity-100 group-hover/btn:translate-x-0"
         svgIcon="platform_solid:chevron-right"
       ></mat-icon>
-    </button>
+    </a>
   </div>
 </div>
