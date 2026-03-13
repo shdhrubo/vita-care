@@ -10,7 +10,13 @@ import { AuthSyncService } from './core/services/auth-sync.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
+    provideRouter(
+      routes, 
+      withInMemoryScrolling({ 
+        scrollPositionRestoration: 'enabled',
+        anchorScrolling: 'enabled' 
+      })
+    ),
     // Enable DI-based interceptors
     provideHttpClient(withInterceptorsFromDi()),
     // Register the API interceptor
