@@ -117,11 +117,7 @@
     @if (isLoading) {
       <div class="py-16 flex justify-center w-full">
         <app-loading
-          [message]="
-            doctors.length === 0
-              ? 'Connecting to medical network...'
-              : 'Bridging more specialists...'
-          "
+          [message]="doctors.length === 0 ? 'Loading...' : 'Loading more specialists...'"
         ></app-loading>
       </div>
     }
@@ -132,7 +128,7 @@
         <div class="flex items-center gap-6 w-full max-w-md opacity-60">
           <div class="flex-1 h-[2px] rounded-full bg-slate-200"></div>
           <span class="text-[12px] font-black text-slate-400 uppercase tracking-[0.25em]"
-            >End of Directory</span
+            >End of Result</span
           >
           <div class="flex-1 h-[2px] rounded-full bg-slate-200"></div>
         </div>
