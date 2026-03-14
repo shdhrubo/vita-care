@@ -1,0 +1,141 @@
+<div class="booking-dialog-container p-6 w-[550px] max-w-full bg-white rounded-3xl shadow-xl">
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <div class="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+    <div class="flex items-center gap-4">
+      <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
+        <mat-icon class="text-2xl" svgIcon="platform_solid:calendar"></mat-icon>
+      </div>
+      <div>
+        <h2 class="text-2xl font-black text-slate-900 leading-tight">Book Appointment</h2>
+        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Secure your consultation</p>
+      </div>
+    </div>
+    <button
+      type="button"
+      (click)="close()"
+      class="w-10 h-10 rounded-full flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-slate-600 transition-all"
+    >
+      <mat-icon svgIcon="platform_solid:close"></mat-icon>
+    </button>
+  </div>
+
+  <div class="dialog-content overflow-y-auto max-h-[70vh] pr-2">
+    <!-- ── Doctor Info Card ────────────────────────────── -->
+    <div class="mb-6 p-5 bg-slate-50 rounded-2xl border border-slate-100 relative overflow-hidden group">
+      <div class="absolute top-0 right-0 p-3 opacity-10">
+        <mat-icon class="text-4xl" svgIcon="platform_solid:building"></mat-icon>
+      </div>
+      <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">You are booking with</p>
+      <div class="flex items-center gap-5">
+        <div class="w-16 h-16 rounded-[1.25rem] bg-white shadow-sm flex items-center justify-center text-primary font-black text-2xl border border-slate-100">
+          {{ doctor.Name.charAt(0) }}
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-lg font-black text-slate-900 truncate">{{ doctor.Name }}</p>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-black rounded-md uppercase">{{ doctor.Department }}</span>
+            <span class="text-xs font-bold text-slate-400 truncate">{{ doctor.Specializations }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Requester Info (Read Only Display) ────────── -->
+    <div class="mb-8 grid grid-cols-2 gap-4">
+      <div class="p-4 bg-slate-50/50 rounded-xl border border-slate-100 border-dashed">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">Your Name</p>
+        <p class="text-sm font-bold text-slate-800 truncate">{{ creatorName() || '—' }}</p>
+      </div>
+      <div class="p-4 bg-slate-50/50 rounded-xl border border-slate-100 border-dashed">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 leading-none">Your Email</p>
+        <p class="text-sm font-bold text-slate-800 truncate">{{ creatorEmail() || '—' }}</p>
+      </div>
+    </div>
+
+    <!-- ── Form ────────── -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6 pb-2">
+      <!-- Phone Field -->
+      <div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Contact Phone</mat-label>
+          <mat-icon matPrefix class="text-slate-400 mr-2" svgIcon="platform_solid:phone"></mat-icon>
+          <input matInput formControlName="CreatorPhone" placeholder="+880 1234..." type="tel" />
+          <mat-hint class="font-semibold text-[10px]">Enter a valid mobile number</mat-hint>
+          @if (form.controls.CreatorPhone.invalid && form.controls.CreatorPhone.touched) {
+            <mat-error>Correct phone format is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <!-- Date Picker -->
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Prefered Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [min]="minDate"
+              formControlName="Date"
+              placeholder="Pick a date"
+              readonly
+              (click)="picker.open()"
+            />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            @if (form.controls.Date.invalid && form.controls.Date.touched) {
+              <mat-error>Select a date</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <!-- Slot Selector -->
+        <div>
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Available Time Slot</mat-label>
+            <mat-select formControlName="Slot" placeholder="Choose a timing">
+              @for (slot of doctor.Slots; track slot.Value) {
+                <mat-option [value]="slot.Value">
+                  <div class="flex items-center gap-2">
+                    <mat-icon class="scale-75 text-slate-400" svgIcon="platform_solid:calendar"></mat-icon>
+                    <span class="font-bold">{{ slot.ViewValue }}</span>
+                  </div>
+                </mat-option>
+              } @empty {
+                <mat-option disabled>No timings listed</mat-option>
+              }
+            </mat-select>
+            @if (form.controls.Slot.invalid && form.controls.Slot.touched) {
+              <mat-error>Select a slot</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex items-center gap-4 mt-8 pt-4">
+        <button
+          type="button"
+          (click)="close()"
+          class="flex-1 py-4 px-6 rounded-2xl font-black text-xs uppercase tracking-widest bg-slate-50 text-slate-500 border border-slate-100 hover:bg-slate-100 hover:text-slate-700 transition-all"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          [disabled]="form.invalid || isSubmitting()"
+          class="flex-[2] py-4 px-6 rounded-2xl font-black text-xs uppercase tracking-widest bg-slate-900 text-white hover:bg-primary disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed transition-all shadow-xl shadow-slate-900/10 hover:shadow-primary/20 flex items-center justify-center gap-3"
+        >
+          @if (isSubmitting()) {
+            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <span>Processing...</span>
+          } @else {
+            <mat-icon class="w-5 h-5" svgIcon="platform_solid:check-circle"></mat-icon>
+            <span>Confirm Booking</span>
+          }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

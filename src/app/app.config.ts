@@ -3,19 +3,20 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { routes } from './app.routes';
 import { ApiInterceptor } from './core/interceptors/api.interceptor';
 import { AuthSyncService } from './core/services/auth-sync.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideNativeDateAdapter(),
     provideRouter(
-      routes, 
-      withInMemoryScrolling({ 
+      routes,
+      withInMemoryScrolling({
         scrollPositionRestoration: 'enabled',
-        anchorScrolling: 'enabled' 
-      })
+        anchorScrolling: 'enabled',
+      }),
     ),
     // Enable DI-based interceptors
     provideHttpClient(withInterceptorsFromDi()),
@@ -40,4 +41,3 @@ export const appConfig: ApplicationConfig = {
     }),
   ],
 };
-
