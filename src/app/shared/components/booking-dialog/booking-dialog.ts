@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@ang
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatError, MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule, MatLabel, MatSuffix } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatOption, MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -31,7 +31,6 @@ import {
     MatDatepickerModule,
     MatIconModule,
     MatSuffix,
-    MatError,
   ],
   templateUrl: './booking-dialog.html',
   styleUrl: './booking-dialog.scss',
