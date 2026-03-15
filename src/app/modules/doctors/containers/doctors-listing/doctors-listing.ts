@@ -45,9 +45,6 @@ export class DoctorsListingComponent implements AfterViewInit, OnDestroy, OnChan
   private observer?: IntersectionObserver;
 
   ngOnChanges(changes: SimpleChanges) {
-    // When loading finishes, if we still have more data, we briefly disconnect and 
-    // reconnect the observer. This forces the browser to evaluate the *new* DOM height accurately, 
-    // ensuring we don't accidentally rely on stale scroll intersection states.
     if (changes['isLoading'] && !this.isLoading && this.hasMore) {
       if (this.observer && this.scrollAnchor) {
         this.observer.unobserve(this.scrollAnchor.nativeElement);
@@ -78,7 +75,6 @@ export class DoctorsListingComponent implements AfterViewInit, OnDestroy, OnChan
     };
 
     this.observer = new IntersectionObserver(([entry]) => {
-      // Directly check if it's currently intersecting the viewport
       if (entry.isIntersecting && !this.isLoading && this.hasMore) {
         this.scrolled.emit();
       }
