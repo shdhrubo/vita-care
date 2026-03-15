@@ -112,6 +112,7 @@
           <mat-form-field appearance="fill" class="w-full dialog-field" subscriptSizing="dynamic">
             <input
               matInput
+              [matDatepickerFilter]="dateFilter"
               [matDatepicker]="picker"
               [min]="minDate"
               formControlName="Date"
