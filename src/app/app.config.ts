@@ -7,9 +7,11 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { routes } from './app.routes';
 import { ApiInterceptor } from './core/interceptors/api.interceptor';
 import { AuthSyncService } from './core/services/auth-sync.service';
+import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideToastr(),
     provideNativeDateAdapter(),
     provideRouter(
       routes,

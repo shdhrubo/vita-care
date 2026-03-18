@@ -17,6 +17,7 @@ import {
   AppointmentRequest,
   BookingFormControls,
 } from '../../../core/contracts/appointment.contracts';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -47,7 +48,7 @@ export class BookingDialogComponent implements OnInit {
   private auth = inject(AuthService);
   private appointmentService = inject(AppointmentService);
   private dialogRef = inject(MatDialogRef<BookingDialogComponent>);
-
+  private readonly toastr = inject(ToastrService);
   readonly doctor: Doctor = inject(MAT_DIALOG_DATA).doctor;
 
   form = this.fb.group<BookingFormControls>({
@@ -113,10 +114,12 @@ export class BookingDialogComponent implements OnInit {
     this.appointmentService.createAppointment(payload).subscribe({
       next: () => {
         this.isSubmitting.set(false);
+        this.toastr.success('Appointment Created Successfully!');
         this.dialogRef.close(true);
       },
       error: (err) => {
         console.error('Booking error:', err);
+        this.toastr.error('Something Went Wrong!');
         this.isSubmitting.set(false);
       },
     });
