@@ -1,0 +1,40 @@
+<div class="flex h-[calc(100vh-64px)] overflow-hidden bg-slate-50 relative mt-16 w-full max-w-350 mx-auto border-x border-border">
+  <!-- Desktop Sidebar -->
+  <aside class="w-64 border-r border-slate-200 bg-white hidden md:flex flex-col h-full shadow-sm sticky top-0">
+    <div class="px-6 py-6 mb-2">
+      <h3 class="text-xs font-black uppercase text-slate-400 tracking-widest border-b border-slate-100 pb-3">Patient Portal</h3>
+    </div>
+    <!-- Profile Option -->
+    <a routerLink="/dashboard/profile"
+       routerLinkActive="bg-primary/10 text-primary border-r-4 border-primary"
+       class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold">
+      <mat-icon svgIcon="platform_solid:user"></mat-icon>
+      My Profile
+    </a>
+    <!-- Appointments Option -->
+    <a routerLink="/dashboard/appointments"
+       routerLinkActive="bg-primary/10 text-primary border-r-4 border-primary"
+       class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold">
+      <mat-icon svgIcon="platform_solid:calendar"></mat-icon>
+      My Appointments
+    </a>
+
+    <!-- Admin Option -->
+    @if (isAdmin$ | async) {
+      <div class="px-6 py-6 mt-4 mb-2">
+        <h3 class="text-xs font-black uppercase text-indigo-400 tracking-widest border-b border-slate-100 pb-3">Admin Center</h3>
+      </div>
+      <a routerLink="/dashboard/all-appointments"
+         routerLinkActive="bg-indigo-50 text-indigo-600 border-r-4 border-indigo-600"
+         class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold">
+        <mat-icon svgIcon="platform_solid:building"></mat-icon>
+        All Appointments
+      </a>
+    }
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto w-full p-4 lg:p-8">
+    <router-outlet></router-outlet>
+  </main>
+</div>

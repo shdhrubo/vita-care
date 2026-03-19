@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { CommonModule, AsyncPipe, DOCUMENT } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '@auth0/auth0-angular';
+import { UserService } from '../../../core/services/user.service';
 @Component({
   selector: 'app-header',
   imports: [CommonModule, RouterLink, MatIconModule, AsyncPipe],
@@ -13,6 +14,7 @@ import { AuthService } from '@auth0/auth0-angular';
 })
 export class Header {
   public auth = inject(AuthService);
+  public userService = inject(UserService);
   private doc = inject(DOCUMENT);
 
   isMenuOpen = false;
@@ -30,6 +32,7 @@ export class Header {
       ],
     },
     { label: 'Doctors', path: '/doctors' },
+    { label: 'Dashboard', path: '/dashboard', requiresAuth: true },
     { label: 'About', path: '/about' },
     { label: 'Contact', path: '/contact' },
   ];
