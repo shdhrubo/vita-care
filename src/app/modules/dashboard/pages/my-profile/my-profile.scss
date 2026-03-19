@@ -1,3 +1,15 @@
 :host {
   display: block;
+  min-height: 100%;
+}
+
+.letter-spacing-2 {
+  letter-spacing: 0.1em;
+}
+
+/* Ensure no overlap in responsive layouts */
+@media (max-width: 768px) {
+  .max-w-4xl {
+    max-width: 100%;
+  }
 }

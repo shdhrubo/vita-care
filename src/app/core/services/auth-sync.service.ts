@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { AuthService } from '@auth0/auth0-angular';
 import { UserService } from './user.service';
-import { filter, switchMap, take } from 'rxjs/operators';
+import { filter, switchMap, take, distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthSyncService {
@@ -11,11 +11,12 @@ export class AuthSyncService {
   private document = inject(DOCUMENT);
 
   syncUserOnLogin(): void {
-    // Execute auth state sync checks every time application initializes and loads Auth0 context
+    // Flattened stream with state protections to prevent duplicate calls
     this.auth.isLoading$
       .pipe(
         filter((loading) => !loading),
         switchMap(() => this.auth.isAuthenticated$),
+        distinctUntilChanged(), // 1. Only act when authentication status actually flips
       )
       .subscribe((isAuthenticated) => {
         if (!isAuthenticated) {
@@ -23,9 +24,11 @@ export class AuthSyncService {
           return;
         }
 
+        // Inside the authenticated state, only run the upsert once per actual login session
         this.auth.user$
           .pipe(
             filter((user): user is NonNullable<typeof user> => !!user),
+            distinctUntilChanged((prev, curr) => prev?.email === curr?.email),
             take(1),
             switchMap((user) =>
               this.userService.upsertUser({
@@ -35,12 +38,9 @@ export class AuthSyncService {
             ),
           )
           .subscribe({
-            next: (dbUser) => {
-              this.userService.setCurrentUser(dbUser);
-            },
+            next: (dbUser) => this.userService.setCurrentUser(dbUser),
             error: (err) => {
               console.error('Failed to sync/authorize user profile with database:', err);
-              // Auto logout fallback when standard authorization API blocks or errors.
               this.auth.logout({ logoutParams: { returnTo: this.document.location.origin } });
             },
           });

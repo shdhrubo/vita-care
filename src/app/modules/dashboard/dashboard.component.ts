@@ -17,14 +17,17 @@ import { map } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
-  isAdmin$!: Observable<boolean>;
+  isStaff$!: Observable<boolean>;
   
   ngOnInit() {
-    this.isAdmin$ = this.userService.currentUser$.pipe(
+    this.isStaff$ = this.userService.currentUser$.pipe(
       map((user: DbUser | null) => {
         if (!user || !user.Roles) return false;
-        // Verify case-insensitive match for admin role
-        return user.Roles.some((role: string) => role.toLowerCase() === 'admin');
+        // Check for admin or staff (with alternate spelling support)
+        const staffRoles = ['admin', 'receiptionist', 'receptionist'];
+        return user.Roles.some((role: string) => 
+          staffRoles.includes(role.toLowerCase())
+        );
       })
     );
   }
