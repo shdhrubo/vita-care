@@ -18,6 +18,8 @@ import {
   BookingFormControls,
 } from '../../../core/contracts/appointment.contracts';
 import { ToastrService } from 'ngx-toastr';
+import emailjs from '@emailjs/browser';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-booking-dialog',
@@ -115,12 +117,39 @@ export class BookingDialogComponent implements OnInit {
       next: () => {
         this.isSubmitting.set(false);
         this.toastr.success('Appointment Created Successfully!');
+        this.sendEmail(payload);
         this.dialogRef.close(true);
       },
       error: (err) => {
         console.error('Booking error:', err);
         this.toastr.error('Something Went Wrong!');
         this.isSubmitting.set(false);
+      },
+    });
+  }
+
+  private sendEmail(payload: AppointmentRequest) {
+    const slotView =
+      this.doctor.Slots.find((s) => s.Value === payload.Slot)?.ViewValue || payload.Slot;
+
+    const templateParams = {
+      name: payload.CreatorName,
+      to_email: payload.CreatorEmail,
+      doctor_name: payload.DoctorInfo.DoctorName,
+      appointment_date: payload.Date,
+      appointment_time: slotView,
+    };
+
+    from(
+      emailjs.send('service_vita_care', 'template_1m7gdsk', templateParams, {
+        publicKey: '-4llVFsw2tGWqFQ72',
+      })
+    ).subscribe({
+      next: (response) => {
+        console.log('Confirmation email successfully dispatched.', response.text);
+      },
+      error: (err) => {
+        console.error('Failed to send confirmation email', err);
       },
     });
   }
