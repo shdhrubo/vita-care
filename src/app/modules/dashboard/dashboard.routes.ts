@@ -3,6 +3,7 @@ import { DashboardComponent } from './dashboard.component';
 import { MyProfilePage } from './pages/my-profile/my-profile';
 import { MyAppointmentsPage } from './pages/my-appointments/my-appointments';
 import { AllAppointmentsPage } from './pages/all-appointments/all-appointments';
+import { roleGuardFn } from '../../core/guards/role.guard';
 
 export default [
   {
@@ -12,7 +13,7 @@ export default [
       {
         path: '',
         redirectTo: 'profile',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'profile',
@@ -25,6 +26,7 @@ export default [
       {
         path: 'all-appointments',
         component: AllAppointmentsPage,
+        canActivate: [roleGuardFn(['admin', 'receiptionist'])],
       },
     ],
   },
