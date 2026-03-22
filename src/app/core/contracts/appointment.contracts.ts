@@ -6,6 +6,7 @@ export interface DoctorInfo {
   DoctorEmail: string;
   Department: string;
   Gender: number;
+  Specializations: string;
 }
 
 export interface AppointmentRequest {
@@ -34,7 +35,7 @@ export interface DoctorInfoResponse {
   DoctorName: string;
   DoctorEmail: string;
   Department: string;
-  Specializations: string[] | null;
+  Specializations: string;
   Gender: ValueViewPair;
 }
 

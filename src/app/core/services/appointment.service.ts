@@ -30,4 +30,26 @@ export class AppointmentService {
       }
     });
   }
+
+  getAllAppointments(
+    search: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<PaginatedAppointments> {
+    return this.http.get<PaginatedAppointments>(this.apiUrl, {
+      params: {
+        search,
+        pageNumber,
+        pageSize
+      }
+    });
+  }
+
+  updateAppointmentStatus(id: string, newStatus: number): Observable<any> {
+    // Assuming a standard REST endpoint for status update. 
+    // Adjust if the API expects it differently
+    return this.http.put(`${this.apiUrl}/${id}/status`, newStatus, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
 }

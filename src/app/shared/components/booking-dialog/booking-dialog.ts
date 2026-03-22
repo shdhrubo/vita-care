@@ -105,6 +105,7 @@ export class BookingDialogComponent implements OnInit {
         DoctorEmail: this.doctor.Email,
         Department: this.doctor.Department,
         Gender: this.doctor.Gender.Value,
+        Specializations: this.doctor.Specializations,
       },
       CreatorName: this.creatorName(),
       CreatorEmail: this.creatorEmail(),
@@ -143,7 +144,7 @@ export class BookingDialogComponent implements OnInit {
     from(
       emailjs.send('service_vita_care', 'template_1m7gdsk', templateParams, {
         publicKey: '-4llVFsw2tGWqFQ72',
-      })
+      }),
     ).subscribe({
       next: (response) => {
         console.log('Confirmation email successfully dispatched.', response.text);
