@@ -8,13 +8,13 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import {
   Subject,
   takeUntil,
   debounceTime,
   distinctUntilChanged,
   filter,
-  switchMap,
   finalize,
   tap,
 } from 'rxjs';
@@ -25,11 +25,15 @@ import {
   AppointmentResponse,
   AppointmentStatus,
 } from '../../../../core/contracts/appointment.contracts';
+import {
+  ConfirmationModalComponent,
+  ConfirmationData,
+} from '../../../../shared/components/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-my-appointments',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatDialogModule],
   templateUrl: './my-appointments.html',
   styleUrl: './my-appointments.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -37,6 +41,7 @@ import {
 export class MyAppointmentsPage implements OnInit, OnDestroy {
   private appointmentService = inject(AppointmentService);
   private userService = inject(UserService);
+  private dialog = inject(MatDialog);
   private destroy$ = new Subject<void>();
 
   appointments = signal<AppointmentResponse[]>([]);
@@ -109,6 +114,100 @@ export class MyAppointmentsPage implements OnInit, OnDestroy {
           this.loading.set(false);
         },
       });
+  }
+
+  updateStatus(apt: AppointmentResponse, status: AppointmentStatus) {
+    let confirmData: ConfirmationData;
+
+    switch (status) {
+      case AppointmentStatus.Canceled:
+        confirmData = {
+          title: 'Cancel Appointment',
+          message: `Are you sure you want to cancel your appointment?`,
+          confirmLabel: 'Yes, Cancel',
+          confirmColor: 'red',
+        };
+        break;
+      // You can add more matching logic here if needed, like deleting/rescheduling
+      default:
+        return;
+    }
+
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: '450px',
+      data: confirmData,
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(filter((result) => !!result))
+      .subscribe(() => {
+        this.executeStatusUpdate(apt.Id, status);
+      });
+  }
+
+  private executeStatusUpdate(appointmentId: string, status: AppointmentStatus) {
+    this.appointmentService.updateAppointmentStatus(appointmentId, status).subscribe({
+      next: () => {
+        this.appointments.update((items) =>
+          items.map((apt) =>
+            apt.Id === appointmentId
+              ? { ...apt, Status: { Value: status, ViewValue: this.getStatusViewValue(status) } }
+              : apt,
+          ),
+        );
+      },
+      error: (err) => {
+        console.error('Error updating appointment status:', err);
+      },
+    });
+  }
+
+  deleteAppointment(apt: AppointmentResponse) {
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: '450px',
+      data: {
+        title: 'Delete Appointment',
+        message: `Are you sure you want to completely delete your appointment?`,
+        confirmLabel: 'Yes, Delete',
+        confirmColor: 'red',
+      },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(filter((result) => !!result))
+      .subscribe(() => {
+        this.appointmentService.deleteAppointment(apt.Id).subscribe({
+          next: () => {
+            // Remove the appointment from the local list
+            this.appointments.update((items) => items.filter((item) => item.Id !== apt.Id));
+            this.totalCount.update((t) => t - 1);
+          },
+          error: (err) => {
+            console.error('Error deleting appointment:', err);
+          },
+        });
+      });
+  }
+
+  private getStatusViewValue(status: AppointmentStatus): string {
+    switch (status) {
+      case AppointmentStatus.Requested:
+        return 'Requested';
+      case AppointmentStatus.Approved:
+        return 'Approved';
+      case AppointmentStatus.Canceled:
+        return 'Canceled';
+      case AppointmentStatus.Visited:
+        return 'Visited';
+      case AppointmentStatus.NotVisited:
+        return 'Not Visited';
+      default:
+        return 'Unknown';
+    }
   }
 
   onScrollReached() {

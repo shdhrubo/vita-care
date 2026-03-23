@@ -8,24 +8,30 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Subject, takeUntil, debounceTime, distinctUntilChanged, finalize } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Subject, takeUntil, debounceTime, distinctUntilChanged, finalize, filter } from 'rxjs';
 import { AppointmentService } from '../../../../core/services/appointment.service';
 import {
   getStatusColorClass,
   AppointmentResponse,
   AppointmentStatus,
 } from '../../../../core/contracts/appointment.contracts';
+import {
+  ConfirmationModalComponent,
+  ConfirmationData,
+} from '../../../../shared/components/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-all-appointments',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, MatDialogModule],
   templateUrl: './all-appointments.html',
   styleUrl: './all-appointments.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AllAppointmentsPage implements OnInit, OnDestroy {
   private appointmentService = inject(AppointmentService);
+  private dialog = inject(MatDialog);
   private destroy$ = new Subject<void>();
 
   appointments = signal<AppointmentResponse[]>([]);
@@ -90,9 +96,71 @@ export class AllAppointmentsPage implements OnInit, OnDestroy {
       });
   }
 
-  updateStatus(appointmentId: string, status: AppointmentStatus) {
+  updateStatus(apt: AppointmentResponse, status: AppointmentStatus) {
+    let confirmData: ConfirmationData;
+
+    switch (status) {
+      case AppointmentStatus.Canceled:
+        confirmData = {
+          title: 'Cancel Appointment',
+          message: `Are you sure you want to cancel the appointment?`,
+          confirmLabel: 'Yes, Cancel',
+          confirmColor: 'red',
+        };
+        break;
+      case AppointmentStatus.Approved:
+        confirmData = {
+          title: 'Approve Appointment',
+          message: `Are you sure you want to approve the appointment?`,
+          confirmLabel: 'Approve',
+          confirmColor: 'green',
+        };
+        break;
+      case AppointmentStatus.NotVisited:
+        confirmData = {
+          title: 'Mark as Not Visited',
+          message: `Are you sure you want to mark ${apt.CreatorName} as a no-show?`,
+          confirmLabel: 'Confirm No-Show',
+          confirmColor: 'orange',
+        };
+        break;
+      case AppointmentStatus.Visited:
+        confirmData = {
+          title: 'Mark as Visited',
+          message: `Confirm that ${apt.CreatorName} has completed their visit.`,
+          confirmLabel: 'Confirm Visit',
+          confirmColor: 'indigo',
+        };
+        break;
+      default:
+        return; // Unknown status, do nothing
+    }
+
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: '450px',
+      data: confirmData,
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(filter((result) => !!result))
+      .subscribe(() => {
+        this.executeStatusUpdate(apt.Id, status);
+      });
+  }
+
+  private executeStatusUpdate(appointmentId: string, status: AppointmentStatus) {
     this.appointmentService.updateAppointmentStatus(appointmentId, status).subscribe({
-      next: () => {},
+      next: () => {
+        this.appointments.update((items) =>
+          items.map((apt) =>
+            apt.Id === appointmentId
+              ? { ...apt, Status: { Value: status, ViewValue: this.getStatusViewValue(status) } }
+              : apt,
+          ),
+        );
+      },
       error: (err) => {
         console.error('Error updating appointment status:', err);
       },

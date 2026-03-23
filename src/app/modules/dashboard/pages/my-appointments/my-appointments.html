@@ -95,11 +95,13 @@
                 class="flex gap-2 mt-2 sm:mt-1 border-t sm:border-t-0 border-slate-200 pt-3 sm:pt-0 w-full sm:w-auto justify-end"
               >
                 <button
+                  (click)="updateStatus(apt, AppointmentStatus.Canceled)"
                   class="px-4 py-1.5 text-sm font-semibold text-slate-600 bg-white border border-slate-200 hover:bg-slate-100 hover:text-slate-800 rounded-lg transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
+                  (click)="deleteAppointment(apt)"
                   class="px-4 py-1.5 text-sm font-semibold text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 rounded-lg transition-colors cursor-pointer"
                 >
                   Delete

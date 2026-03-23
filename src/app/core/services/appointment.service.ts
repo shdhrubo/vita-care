@@ -52,4 +52,8 @@ export class AppointmentService {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+
+  deleteAppointment(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }
