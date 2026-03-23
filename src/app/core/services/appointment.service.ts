@@ -46,10 +46,8 @@ export class AppointmentService {
   }
 
   updateAppointmentStatus(id: string, newStatus: number): Observable<any> {
-    // Assuming a standard REST endpoint for status update. 
-    // Adjust if the API expects it differently
-    return this.http.put(`${this.apiUrl}/${id}/status`, newStatus, {
-      headers: { 'Content-Type': 'application/json' }
+    return this.http.patch(`${this.apiUrl}/${id}/status`, newStatus, {
+      headers: { 'Content-Type': 'application/json' },
     });
   }
 

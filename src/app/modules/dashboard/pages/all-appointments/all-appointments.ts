@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil, debounceTime, distinctUntilChanged, finalize, filter } from 'rxjs';
 import { AppointmentService } from '../../../../core/services/appointment.service';
 import {
@@ -32,6 +33,7 @@ import {
 export class AllAppointmentsPage implements OnInit, OnDestroy {
   private appointmentService = inject(AppointmentService);
   private dialog = inject(MatDialog);
+  private toastr = inject(ToastrService);
   private destroy$ = new Subject<void>();
 
   appointments = signal<AppointmentResponse[]>([]);
@@ -153,16 +155,12 @@ export class AllAppointmentsPage implements OnInit, OnDestroy {
   private executeStatusUpdate(appointmentId: string, status: AppointmentStatus) {
     this.appointmentService.updateAppointmentStatus(appointmentId, status).subscribe({
       next: () => {
-        this.appointments.update((items) =>
-          items.map((apt) =>
-            apt.Id === appointmentId
-              ? { ...apt, Status: { Value: status, ViewValue: this.getStatusViewValue(status) } }
-              : apt,
-          ),
-        );
+        this.toastr.success(`Appointment ${this.getStatusViewValue(status)} successfully!`);
+        this.resetPagination();
+        this.loadAppointments();
       },
-      error: (err) => {
-        console.error('Error updating appointment status:', err);
+      error: () => {
+        this.toastr.error('Something went wrong! Please try again.');
       },
     });
   }

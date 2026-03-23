@@ -9,6 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import {
   Subject,
   takeUntil,
@@ -42,6 +43,7 @@ export class MyAppointmentsPage implements OnInit, OnDestroy {
   private appointmentService = inject(AppointmentService);
   private userService = inject(UserService);
   private dialog = inject(MatDialog);
+  private toastr = inject(ToastrService);
   private destroy$ = new Subject<void>();
 
   appointments = signal<AppointmentResponse[]>([]);
@@ -150,16 +152,12 @@ export class MyAppointmentsPage implements OnInit, OnDestroy {
   private executeStatusUpdate(appointmentId: string, status: AppointmentStatus) {
     this.appointmentService.updateAppointmentStatus(appointmentId, status).subscribe({
       next: () => {
-        this.appointments.update((items) =>
-          items.map((apt) =>
-            apt.Id === appointmentId
-              ? { ...apt, Status: { Value: status, ViewValue: this.getStatusViewValue(status) } }
-              : apt,
-          ),
-        );
+        this.toastr.success(`Appointment ${this.getStatusViewValue(status)} successfully!`);
+        this.resetPagination();
+        this.loadAppointments();
       },
-      error: (err) => {
-        console.error('Error updating appointment status:', err);
+      error: () => {
+        this.toastr.error('Something went wrong! Please try again.');
       },
     });
   }
@@ -182,12 +180,12 @@ export class MyAppointmentsPage implements OnInit, OnDestroy {
       .subscribe(() => {
         this.appointmentService.deleteAppointment(apt.Id).subscribe({
           next: () => {
-            // Remove the appointment from the local list
-            this.appointments.update((items) => items.filter((item) => item.Id !== apt.Id));
-            this.totalCount.update((t) => t - 1);
+            this.toastr.success('Appointment deleted successfully!');
+            this.resetPagination();
+            this.loadAppointments();
           },
-          error: (err) => {
-            console.error('Error deleting appointment:', err);
+          error: () => {
+            this.toastr.error('Something went wrong! Please try again.');
           },
         });
       });
