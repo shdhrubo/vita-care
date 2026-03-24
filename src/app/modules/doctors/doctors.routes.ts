@@ -3,6 +3,7 @@ import { DoctorProfile } from './containers/doctor-profile/doctor-profile';
 import { DoctorsComponent } from './doctors.component';
 import { DoctorsList } from './pages/doctors-list/doctors-list';
 import { doctorResolver } from './resolvers/doctor.resolver';
+import { authGuardFn } from '@auth0/auth0-angular';
 
 export default [
   {
@@ -16,6 +17,7 @@ export default [
       },
       {
         path: ':id',
+        canActivate: [authGuardFn],
         component: DoctorProfile,
         resolve: { doctor: doctorResolver },
       },
