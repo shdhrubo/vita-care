@@ -27,6 +27,13 @@
       >
         All Appointments
       </a>
+      <a
+        routerLink="/dashboard/user-management"
+        routerLinkActive="bg-primary/10 text-primary border-primary"
+        class="flex-shrink-0 px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl border border-transparent transition-all"
+      >
+        Users
+      </a>
     }
   </nav>
 
@@ -74,6 +81,14 @@
       >
         <mat-icon svgIcon="platform_solid:building"></mat-icon>
         All Appointments
+      </a>
+      <a
+        routerLink="/dashboard/user-management"
+        routerLinkActive="bg-purple-50 text-purple-600 border-purple-500 border-r-4"
+        class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold"
+      >
+        <mat-icon svgIcon="platform_solid:users"></mat-icon>
+        User Management
       </a>
     }
   </aside>

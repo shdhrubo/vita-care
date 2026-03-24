@@ -8,3 +8,13 @@ export interface DbUser {
   Name: string;
   Roles: string[];
 }
+
+export interface PaginatedUsers {
+  Items: DbUser[];
+  TotalCount: number;
+}
+
+export interface UserRoleUpdateRequest {
+  email: string;
+  role: string;
+}
