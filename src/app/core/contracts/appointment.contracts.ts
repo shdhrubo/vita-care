@@ -63,6 +63,15 @@ export enum AppointmentStatus {
   NotVisited = 5,
 }
 
+export interface AppointmentStats {
+  Total: number;
+  Requested: number;
+  Approved: number;
+  Canceled: number;
+  Visited: number;
+  NotVisited: number;
+}
+
 export function getStatusColorClass(statusValue: number): string {
   switch (statusValue) {
     case AppointmentStatus.Requested:

@@ -54,4 +54,14 @@ export class AppointmentService {
   deleteAppointment(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  getAppointmentStats(email: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/stats`, {
+      params: { email },
+    });
+  }
+
+  getAllAppointmentStats(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/stats/all`);
+  }
 }

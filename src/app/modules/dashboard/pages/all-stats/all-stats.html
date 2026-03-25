@@ -1,0 +1,46 @@
+<div class="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 max-w-5xl mx-auto mt-6">
+  <div class="flex items-center gap-4 mb-10 flex-wrap">
+    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+      <mat-icon svgIcon="platform_solid:statistics" class="h-8 w-8 scale-125"></mat-icon>
+    </div>
+    <div class="flex-1 min-w-[200px]">
+      <h2 class="text-3xl font-black text-slate-900 leading-tight">All Statistics</h2>
+      <p class="text-sm font-semibold text-slate-400 mt-1">Global appointment statistics summary</p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="flex justify-center py-20">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+    </div>
+  }
+
+  @if (!loading() && stats()) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (item of getStatItems(); track item.label) {
+        <div
+          class="bg-white p-10 border rounded-[8px] border-slate-200 hover:shadow-lg transition-all duration-300 relative flex flex-col justify-between h-44"
+        >
+          <h3 class="text-slate-400 text-xs font-black uppercase tracking-[0.2em] truncate">
+            {{ item.label }}
+          </h3>
+
+          <div class="flex items-end justify-between">
+            <div class="text-6xl font-black tracking-tighter leading-none" [ngClass]="item.color">
+              {{ item.value }}
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (!loading() && !stats()) {
+    <div class="text-center py-20 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
+      <mat-icon
+        svgIcon="platform_solid:statistics"
+        class="h-12 w-12 text-slate-300 mb-4 scale-150"
+      ></mat-icon>
+      <h3 class="text-lg font-bold text-slate-900">No data found</h3>
+      <p class="text-slate-500 font-medium">We couldn't retrieve global stats at this time.</p>
+    </div>
+  }
+</div>

@@ -19,6 +19,13 @@
     >
       Appointments
     </a>
+    <a
+      routerLink="/dashboard/my-stats"
+      routerLinkActive="bg-primary/10 text-primary border-primary"
+      class="flex-shrink-0 px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl border border-transparent transition-all"
+    >
+      My Statistics
+    </a>
     @if (isStaff$ | async) {
       <a
         routerLink="/dashboard/all-appointments"
@@ -33,6 +40,13 @@
         class="flex-shrink-0 px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl border border-transparent transition-all"
       >
         Users
+      </a>
+      <a
+        routerLink="/dashboard/all-stats"
+        routerLinkActive="bg-primary/10 text-primary border-primary"
+        class="flex-shrink-0 px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl border border-transparent transition-all"
+      >
+        All Statistics
       </a>
     }
   </nav>
@@ -64,6 +78,14 @@
       <mat-icon svgIcon="platform_solid:calendar"></mat-icon>
       My Appointments
     </a>
+    <a
+      routerLink="/dashboard/my-stats"
+      routerLinkActive="bg-primary/10 text-primary border-r-4 border-primary"
+      class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold"
+    >
+      <mat-icon svgIcon="platform_solid:statistics"></mat-icon>
+      My Statistics
+    </a>
 
     <!-- Staff/Admin Center Link -->
     @if (isStaff$ | async) {
@@ -79,7 +101,7 @@
         routerLinkActive="bg-primary/10 text-primary border-primary border-r-4"
         class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold"
       >
-        <mat-icon svgIcon="platform_solid:building"></mat-icon>
+        <mat-icon svgIcon="platform_solid:calendar"></mat-icon>
         All Appointments
       </a>
       <a
@@ -89,6 +111,14 @@
       >
         <mat-icon svgIcon="platform_solid:users"></mat-icon>
         User Management
+      </a>
+      <a
+        routerLink="/dashboard/all-stats"
+        routerLinkActive="bg-primary/10 text-primary border-primary border-r-4"
+        class="px-6 py-4 flex items-center gap-3 text-slate-600 hover:bg-slate-50 transition-colors font-semibold"
+      >
+        <mat-icon svgIcon="platform_solid:statistics"></mat-icon>
+        All Statistics
       </a>
     }
   </aside>
