@@ -1,0 +1,14 @@
+    <div class="space-y-6">
+      <h2 class="text-xl font-black text-slate-900 uppercase tracking-widest pl-2">Our Core DNA</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @for (value of values; track value.title) {
+          <div class="bg-slate-50 p-10 border rounded-[8px] border-slate-200 transition-all duration-300 h-64 flex flex-col justify-between">
+            <div>
+              <h4 class="text-lg font-black text-slate-900 uppercase mb-3">{{ value.title }}</h4>
+              <p class="text-sm text-slate-500 leading-relaxed font-medium">{{ value.desc }}</p>
+            </div>
+            <div class="w-8 h-1 bg-primary rounded-full"></div>
+          </div>
+        }
+      </div>
+    </div>

@@ -1,0 +1,9 @@
+    <div class="min-h-[calc(100vh-100px)] bg-slate-50 pt-16 pb-32">
+      <div class="max-w-6xl mx-auto px-6">
+        <app-contact-intro></app-contact-intro>
+        <div class="bg-white rounded-3xl shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col lg:flex-row border border-slate-100/50">
+          <app-contact-details class="lg:w-[40%] block" [details]="contactDetails"></app-contact-details>
+          <app-contact-form class="lg:w-[60%] block bg-white" [form]="contactForm" [isSubmitting]="isSubmitting" (onSubmit)="submitMessage()"></app-contact-form>
+        </div>
+      </div>
+    </div>

@@ -16,4 +16,12 @@ export const routes: Routes = [
     canActivate: [authGuardFn],
     loadChildren: () => import('./modules/dashboard/dashboard.routes'),
   },
+  {
+    path: 'about',
+    loadChildren: () => import('./modules/about/about.routes'),
+  },
+  {
+    path: 'contact',
+    loadChildren: () => import('./modules/contact/contact.routes'),
+  },
 ];
