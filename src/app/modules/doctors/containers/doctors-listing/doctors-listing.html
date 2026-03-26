@@ -17,6 +17,17 @@
         Find the perfect doctor, <br class="hidden sm:block" />
         <span class="text-primary">book instantly.</span>
       </h1>
+
+      @if (isStaff$ | async) {
+        <div class="mt-8 flex justify-center animate-fade-in-up" style="animation-delay: 150ms">
+          <a
+            routerLink="create"
+            class="px-8 py-4 bg-primary text-white font-bold rounded-2xl hover:shadow-2xl hover:shadow-primary/30 transition-all hover:-translate-y-1 active:scale-95 cursor-pointer border border-primary ring-4 ring-primary/5"
+          >
+            Add New Specialist Doctor
+          </a>
+        </div>
+      }
     </div>
 
     <!-- Search Section -->

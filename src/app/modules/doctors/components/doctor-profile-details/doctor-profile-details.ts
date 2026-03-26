@@ -13,6 +13,7 @@ import { Doctor } from '../../../../core/contracts/doctor.contracts';
 })
 export class DoctorProfileDetailsComponent {
   @Input({ required: true }) doctor!: Doctor;
+  @Input() isAdmin = false;
 
   @Output() editProfileClicked = new EventEmitter<void>();
   @Output() bookAppointmentClicked = new EventEmitter<void>();

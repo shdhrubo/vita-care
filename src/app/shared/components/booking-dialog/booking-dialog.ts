@@ -1,4 +1,4 @@
-import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, provideNativeDateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { CustomDateAdapter, MY_DATE_FORMATS } from '../../utils/date-adapter';
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -36,6 +36,7 @@ import { from } from 'rxjs';
     MatDatepickerModule,
     MatIconModule,
     MatSuffix,
+    MatNativeDateModule,
   ],
   providers: [
     { provide: DateAdapter, useClass: CustomDateAdapter },

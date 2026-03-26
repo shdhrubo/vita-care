@@ -1,21 +1,27 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Doctor } from '../../../../core/contracts/doctor.contracts';
 import { DoctorProfileDetailsComponent } from '../../components/doctor-profile-details/doctor-profile-details';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BookingDialogComponent } from '../../../../shared/components/booking-dialog/booking-dialog';
+import { Router } from '@angular/router';
+import { UserService } from '../../../../core/services/user.service';
 
 @Component({
   selector: 'app-doctor-profile-container',
   standalone: true,
-  imports: [CommonModule, DoctorProfileDetailsComponent, MatDialogModule],
+  imports: [CommonModule, DoctorProfileDetailsComponent, MatDialogModule, AsyncPipe],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss',
 })
 export class DoctorProfile implements OnInit {
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
+  private router = inject(Router);
+  private userService = inject(UserService);
+
+  isStaff$ = this.userService.isStaff$;
 
   doctor!: Doctor;
 
@@ -28,8 +34,7 @@ export class DoctorProfile implements OnInit {
   }
 
   onEditProfile() {
-    // Logic for editing profile
-    console.log('Edit profile clicked for', this.doctor.Id);
+    this.router.navigate(['/doctors/edit', this.doctor.Id]);
   }
 
   onBookAppointment() {

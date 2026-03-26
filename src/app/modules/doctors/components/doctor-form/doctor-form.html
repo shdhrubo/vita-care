@@ -1,0 +1,148 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="animate-fade-in-up">
+  <div class="space-y-8">
+    <!-- Grid System for Main info -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2">
+      <!-- Full Name -->
+      <div class="flex flex-col">
+        <label for="Name" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Full Name</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:user"></mat-icon>
+          <input matInput id="Name" formControlName="Name" placeholder="Dr. John Doe">
+          @if (f['Name']?.touched && f['Name']?.invalid) {
+            <mat-error>Full name is required (min 3 chars).</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Email Address -->
+      <div class="flex flex-col">
+        <label for="Email" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Email Address</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:mail"></mat-icon>
+          <input matInput id="Email" formControlName="Email" type="email" placeholder="doctor@vitacare.com">
+          @if (f['Email']?.touched && f['Email']?.invalid) {
+            <mat-error>Valid email is required.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="flex flex-col">
+        <label for="PhoneNumber" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Phone Number</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:phone"></mat-icon>
+          <input matInput id="PhoneNumber" formControlName="PhoneNumber" placeholder="017XXXXXXXX">
+          @if (f['PhoneNumber']?.touched && f['PhoneNumber']?.invalid) {
+            <mat-error>Phone number (11-15 digits) is required.</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <!-- Gender -->
+      <div class="flex flex-col">
+        <label for="Gender" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Gender</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:user"></mat-icon>
+          <mat-select id="Gender" formControlName="Gender">
+            @for (g of genders; track g.value) {
+              <mat-option [value]="g.value">{{ g.viewValue }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Department -->
+      <div class="flex flex-col">
+        <label for="Department" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Department</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:building"></mat-icon>
+          <input matInput id="Department" formControlName="Department" placeholder="e.g. Cardiology">
+        </mat-form-field>
+      </div>
+
+      <!-- Fee -->
+      <div class="flex flex-col">
+        <label for="Fee" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Consultation Fee (Tk)</label>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:fees"></mat-icon>
+          <input matInput id="Fee" formControlName="Fee" type="number" placeholder="500">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Specializations -->
+    <div class="flex flex-col">
+      <label for="Specializations" class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1 mb-2">Specializations</label>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-icon matPrefix class="mr-3 ml-2 text-slate-400" svgIcon="platform_solid:edit-pencil"></mat-icon>
+        <input matInput id="Specializations" formControlName="Specializations" placeholder="MBBS, FCPS, MD...">
+      </mat-form-field>
+    </div>
+
+    <!-- Available Days -->
+    <div class="space-y-4">
+      <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Available Days</h3>
+      <div class="flex flex-wrap gap-3">
+        @for (day of days; track $index) {
+          <button
+            type="button"
+            (click)="toggleDay($index)"
+            [ngClass]="getAvailableDaysFormArray().at($index).value === 1 
+              ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-105' 
+              : 'bg-white text-slate-400 border-slate-200 hover:border-slate-300'"
+            class="flex-1 min-w-[3rem] h-12 rounded-xl border-2 font-black transition-all duration-300 text-xs active:scale-95 cursor-pointer"
+          >
+            {{ day.short }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Timing Slots -->
+    <div class="space-y-4">
+      <h3 class="text-sm font-black text-slate-700 uppercase tracking-widest pl-1">Timing Slots</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        @for (slot of slots; track slot.value) {
+          <button
+            type="button"
+            (click)="toggleSlot(slot.value)"
+            [ngClass]="isSlotSelected(slot.value) 
+              ? 'bg-primary text-white border-primary shadow-lg shadow-primary/20' 
+              : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl border-2 font-bold transition-all duration-300 text-left active:scale-[0.98] cursor-pointer"
+          >
+            <mat-icon class="w-4! h-4!" svgIcon="platform_solid:calendar"></mat-icon>
+            <span class="text-xs truncate">{{ slot.viewValue }}</span>
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="pt-6 border-t border-slate-100"></div>
+
+    <!-- Form Actions -->
+    <div class="flex items-center justify-end gap-4 pb-4">
+      <button
+        type="button"
+        (click)="cancel.emit()"
+        class="px-8 py-3.5 bg-slate-100 text-slate-600 font-bold rounded-2xl hover:bg-slate-200 transition-all active:scale-95 cursor-pointer"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="loading || form.invalid"
+        class="min-w-[160px] px-8 py-3.5 bg-primary text-white font-bold rounded-2xl hover:shadow-xl hover:shadow-primary/20 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+      >
+        @if (loading) {
+          <div class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+          <span>Processing...</span>
+        } @else {
+          <mat-icon class="w-5! h-5!" svgIcon="platform_solid:check"></mat-icon>
+          <span>{{ isEdit ? 'Update Doctor' : 'Create Doctor' }}</span>
+        }
+      </button>
+    </div>
+  </div>
+</form>

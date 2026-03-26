@@ -1,13 +1,15 @@
 <div class="animate-fade-in-up">
   <!-- Top Action Bar -->
   <div class="flex flex-col-reverse sm:flex-row justify-end items-center gap-4 mb-8">
-    <button
-      (click)="editProfileClicked.emit()"
-      class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-slate-50 text-slate-700 font-bold rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200 cursor-pointer"
-    >
-      <mat-icon class="w-5! h-5!" svgIcon="platform_solid:edit-pencil">edit</mat-icon>
-      <div>Edit Profile</div>
-    </button>
+    @if (isAdmin) {
+      <button
+        (click)="editProfileClicked.emit()"
+        class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-slate-50 text-slate-700 font-bold rounded-xl hover:bg-slate-100 hover:text-slate-900 transition-colors border border-slate-200 cursor-pointer"
+      >
+        <mat-icon class="w-5! h-5!" svgIcon="platform_solid:edit-pencil">edit</mat-icon>
+        <div>Edit Profile</div>
+      </button>
+    }
 
     <button
       (click)="bookAppointmentClicked.emit()"

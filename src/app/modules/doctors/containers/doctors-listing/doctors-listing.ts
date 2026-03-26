@@ -10,12 +10,15 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, AsyncPipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Doctor } from '../../../../core/contracts/doctor.contracts';
 import { DoctorCardComponent } from '../../components/doctor-card/doctor-card';
 import { LoadingComponent } from '../../../../shared/components/loading/loading';
+import { UserService } from '../../../../core/services/user.service';
+import { inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-doctors-listing',
@@ -26,11 +29,15 @@ import { LoadingComponent } from '../../../../shared/components/loading/loading'
     MatIconModule,
     DoctorCardComponent,
     LoadingComponent,
+    RouterLink,
+    AsyncPipe,
   ],
   templateUrl: './doctors-listing.html',
   styleUrl: './doctors-listing.scss',
 })
 export class DoctorsListingComponent implements AfterViewInit, OnDestroy, OnChanges {
+  private userService = inject(UserService);
+  isStaff$ = this.userService.isStaff$;
   @Input() doctors: Doctor[] = [];
   @Input() totalCount: number = 0;
   @Input() isLoading: boolean = false;

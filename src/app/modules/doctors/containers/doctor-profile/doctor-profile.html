@@ -2,6 +2,7 @@
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
     <app-doctor-profile-details
       [doctor]="doctor"
+      [isAdmin]="(isStaff$ | async) ?? false"
       (editProfileClicked)="onEditProfile()"
       (bookAppointmentClicked)="onBookAppointment()"
     ></app-doctor-profile-details>

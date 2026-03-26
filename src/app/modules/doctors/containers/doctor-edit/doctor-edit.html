@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-[#fafafb] pt-28 pb-32">
+  <div class="max-w-[1250px] mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header with Back Button -->
+    @if (doctor()) {
+      <div class="flex flex-col sm:flex-row items-center justify-between mb-12 animate-fade-in-up">
+        <div class="flex items-center gap-6 mb-6 sm:mb-0">
+          <div>
+            <h1
+              class="text-3xl sm:text-4xl font-black text-[#0f172a] tracking-tight leading-none mb-3"
+            >
+              Edit Specialist Profile
+            </h1>
+            <p class="text-slate-500 font-medium tracking-wide">
+              Update details for <span class="text-primary font-bold">{{ doctor()?.Name }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Container -->
+      <div
+        class="bg-white rounded-[2.5rem] border border-border shadow-sm p-8 sm:p-12 relative overflow-hidden"
+      >
+        <!-- Decorative gradient -->
+        <div
+          class="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-primary-400 to-primary"
+        ></div>
+
+        <app-doctor-form
+          [isEdit]="true"
+          [initialData]="doctor()"
+          [loading]="loading()"
+          (formSubmit)="onSubmit($event)"
+          (cancel)="onCancel()"
+        ></app-doctor-form>
+      </div>
+    } @else {
+      <div class="flex flex-col items-center justify-center py-20">
+        <div
+          class="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"
+        ></div>
+        <p class="mt-6 text-slate-500 font-bold tracking-widest uppercase text-xs">
+          Loading Specialist Data...
+        </p>
+      </div>
+    }
+  </div>
+</div>
