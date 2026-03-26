@@ -121,15 +121,15 @@ export class AllAppointmentsPage implements OnInit, OnDestroy {
       case AppointmentStatus.NotVisited:
         confirmData = {
           title: 'Mark as Not Visited',
-          message: `Are you sure you want to mark ${apt.CreatorName} as a no-show?`,
-          confirmLabel: 'Confirm No-Show',
+          message: `Are you sure you want to mark appointment as not visited?`,
+          confirmLabel: 'Confirm',
           confirmColor: 'orange',
         };
         break;
       case AppointmentStatus.Visited:
         confirmData = {
           title: 'Mark as Visited',
-          message: `Confirm that ${apt.CreatorName} has completed their visit.`,
+          message: `Are you sure you want to mark appointment as visited?`,
           confirmLabel: 'Confirm Visit',
           confirmColor: 'indigo',
         };
