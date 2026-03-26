@@ -18,6 +18,7 @@ export interface Doctor {
   Department: string;
   AvailableDays: number[];
   Slots: DoctorSlot[];
+  Fee: number;
 }
 
 export interface DoctorListResponse {

@@ -63,7 +63,7 @@
           Profile Details
         </h2>
 
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
           <div
             class="flex items-center gap-4 text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-100"
           >
@@ -95,6 +95,22 @@
                 Department
               </p>
               <p class="font-semibold text-slate-800">{{ doctor.Department }}</p>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center gap-4 text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-100"
+          >
+            <div
+              class="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 border border-slate-200 shadow-sm"
+            >
+              <mat-icon class="w-5! h-5! text-primary" svgIcon="platform_solid:fees"></mat-icon>
+            </div>
+            <div>
+              <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">
+                Fee
+              </p>
+              <p class="font-semibold text-slate-800">{{ doctor.Fee }} (Tk)</p>
             </div>
           </div>
 

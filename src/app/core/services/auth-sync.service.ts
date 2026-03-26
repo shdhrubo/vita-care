@@ -16,7 +16,7 @@ export class AuthSyncService {
       .pipe(
         filter((loading) => !loading),
         switchMap(() => this.auth.isAuthenticated$),
-        distinctUntilChanged(), // 1. Only act when authentication status actually flips
+        distinctUntilChanged(),
       )
       .subscribe((isAuthenticated) => {
         if (!isAuthenticated) {
@@ -24,7 +24,6 @@ export class AuthSyncService {
           return;
         }
 
-        // Inside the authenticated state, only run the upsert once per actual login session
         this.auth.user$
           .pipe(
             filter((user): user is NonNullable<typeof user> => !!user),
