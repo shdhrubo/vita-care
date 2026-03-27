@@ -1,0 +1,125 @@
+<div class="min-h-screen bg-slate-50 relative overflow-hidden">
+    @if (category(); as cat) {
+        <!-- Dynamic Header -->
+        <div class="relative pt-24 pb-32">
+            <!-- Background Glows -->
+            <div class="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[120px] opacity-20"
+                 [ngClass]="{
+                    'bg-primary': cat.Color === 'primary',
+                    'bg-amber-400': cat.Color === 'amber',
+                    'bg-rose-400': cat.Color === 'rose'
+                 }">
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-6 sm:px-12 relative z-10 animate-fade-in-up">
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm"
+                             [ngClass]="{
+                                'text-primary': cat.Color === 'primary',
+                                'text-amber-500': cat.Color === 'amber',
+                                'text-rose-500': cat.Color === 'rose'
+                             }">
+                            <mat-icon class="w-4! h-4!" [svgIcon]="cat.Icon"></mat-icon>
+                            <span class="text-xs font-black uppercase tracking-widest">{{ cat.Title }}</span>
+                        </div>
+
+                        <h1 class="text-5xl sm:text-7xl font-black text-slate-900 tracking-tight leading-[1.1]">
+                            Advanced <br/>
+                            <span class="italic"
+                                  [ngClass]="{
+                                    'text-primary': cat.Color === 'primary',
+                                    'text-amber-500': cat.Color === 'amber',
+                                    'text-rose-500': cat.Color === 'rose'
+                                  }"
+                            >{{ cat.Title }}</span>
+                        </h1>
+
+                        <p class="text-xl text-slate-500 font-medium leading-relaxed max-w-lg">
+                            {{ cat.Description }} We employ state-of-the-art medical technology to guarantee your wellness and safety.
+                        </p>
+                        
+                        <div class="flex gap-4 pt-4">
+                            <button class="px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white font-black rounded-2xl transition-all shadow-xl shadow-slate-900/20 active:scale-95">
+                                Request Details
+                            </button>
+                            <a routerLink="/doctors" class="px-8 py-4 bg-white border-2 border-slate-200 text-slate-600 font-bold rounded-2xl hover:border-slate-300 transition-all active:scale-95 inline-flex flex-col justify-center">
+                                View Specialists
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Visual Hero Feature -->
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-white/40 backdrop-blur-3xl rounded-[3rem] border border-white/60 shadow-2xl -rotate-6 scale-95"></div>
+                        <div class="relative bg-white/60 backdrop-blur-3xl p-12 rounded-[3rem] border border-white max-w-lg mx-auto shadow-xl flex flex-col items-center justify-center min-h-[500px]"
+                             [ngClass]="{
+                                'shadow-primary/10': cat.Color === 'primary',
+                                'shadow-amber-400/10': cat.Color === 'amber',
+                                'shadow-rose-400/10': cat.Color === 'rose'
+                             }">
+                            
+                            <div class="w-32 h-32 rounded-3xl flex items-center justify-center shadow-2xl mb-12 animate-float"
+                                 [ngClass]="{
+                                    'bg-primary shadow-primary/30 text-white': cat.Color === 'primary',
+                                    'bg-amber-400 shadow-amber-400/30 text-white': cat.Color === 'amber',
+                                    'bg-rose-400 shadow-rose-400/30 text-white': cat.Color === 'rose'
+                                 }">
+                                <mat-icon class="w-16! h-16!" [svgIcon]="cat.Icon"></mat-icon>
+                            </div>
+                            
+                            <div class="text-center space-y-4 w-full">
+                                <div class="h-2 bg-slate-100 rounded-full w-3/4 mx-auto overflow-hidden">
+                                     <div class="h-full rounded-full animate-[pulse_2s_ease-in-out_infinite]"
+                                          [ngClass]="{
+                                              'bg-primary w-full': cat.Color === 'primary',
+                                              'bg-amber-400 w-full': cat.Color === 'amber',
+                                              'bg-rose-400 w-full': cat.Color === 'rose'
+                                          }"></div>
+                                </div>
+                                <h3 class="text-sm font-black text-slate-400 uppercase tracking-widest">Active Standard Protocol</h3>
+                                <p class="font-bold text-slate-900">System Ready</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information details section -->
+        <div class="max-w-7xl mx-auto px-6 sm:px-12 pb-32">
+            <div class="bg-white rounded-[3rem] p-12 sm:p-20 shadow-xl shadow-slate-200/50 border border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-16">
+                <div class="md:col-span-1 space-y-6">
+                    <h3 class="text-2xl font-black text-slate-900">Core Capabilities</h3>
+                    <p class="text-slate-500 font-medium">VitaCare ensures that every {{ cat.Title }} service adheres strictly to international healthcare standards.</p>
+                </div>
+                
+                <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    @for (feature of cat.Features; track feature.Id) {
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                                 [ngClass]="{
+                                    'bg-primary/10 text-primary': cat.Color === 'primary',
+                                    'bg-amber-50 text-amber-500': cat.Color === 'amber',
+                                    'bg-rose-50 text-rose-500': cat.Color === 'rose'
+                                 }">
+                                <mat-icon svgIcon="platform_solid:check"></mat-icon>
+                            </div>
+                            <div class="space-y-2">
+                                <h4 class="font-bold text-slate-900 text-lg">{{ feature.Title }}</h4>
+                                <p class="text-slate-500 text-sm">{{ feature.Description }}</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    } @else {
+        <div class="min-h-screen flex items-center justify-center flex-col">
+            <h1 class="text-3xl font-black text-slate-800">Service Not Found</h1>
+            <a routerLink="/services" class="mt-6 text-primary font-bold hover:underline">Return to Services</a>
+        </div>
+    }
+</div>

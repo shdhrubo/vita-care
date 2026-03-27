@@ -17,6 +17,10 @@ export const routes: Routes = [
     loadChildren: () => import('./modules/dashboard/dashboard.routes'),
   },
   {
+    path: 'services',
+    loadChildren: () => import('./modules/services/services.routes'),
+  },
+  {
     path: 'about',
     loadChildren: () => import('./modules/about/about.routes'),
   },

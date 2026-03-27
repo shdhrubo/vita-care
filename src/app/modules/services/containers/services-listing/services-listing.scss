@@ -1,0 +1,19 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background-color: rgba(248, 250, 252, 0.5); /* Equivalent to bg-slate-50/50 */
+}
+
+.hero-gradient {
+    background: radial-gradient(circle at top right, rgba(var(--primary-rgb), 0.05), transparent),
+                radial-gradient(circle at bottom left, rgba(var(--primary-rgb), 0.03), transparent);
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
