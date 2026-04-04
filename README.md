@@ -1,6 +1,8 @@
 # VitaCare
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.5.
+For Backend Repository Visit: https://github.com/shdhrubo/vita-care-backend
+For Live Site Visit: https://vita-care-portal.netlify.app/
 
 ## Development server
 
